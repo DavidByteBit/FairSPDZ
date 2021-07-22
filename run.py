@@ -23,8 +23,9 @@ args = sys.argv[1]
 # Example
 subprocess.run(["ls"])
 
-# Call editArgs. Pass in model names, model metadata, audit data metadata, and the path to the .mpc file - editArgs
-# should re-compile the .mpc file
+# Call editArgs. Pass in model names, model metadata, audit data metadata, and the path to the .mpc file
+
+# Recompile the .mpc file
 
 # Call bash script to run runAudit.mpc - pass in path
 
