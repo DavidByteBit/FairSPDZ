@@ -8,5 +8,4 @@ args = sys.argv
 ## Local delimiter
 ## Hard-code param values
 ## Close and save file
-# Call compile bash script (pass in path)
 
