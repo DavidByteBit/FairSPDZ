@@ -1,0 +1,33 @@
+# TODO: Imports
+
+# @args
+# MP-SPDZ does not seem to be able to accept command line arguments like traditional programs do. The solution we use
+# is leveraging other python scripts to edit the constants between @args and end@args.
+
+# Name of each model by string (e.g., Logistic Regression (lr), Convolution Neural Network (CNN))
+models = []
+
+# Metadata belonging to each model (e.g., first inner list can represent lr, and the other a CNN,
+# then the first list could just contain how many independent variables the lr model has, while the second
+# may have number of parameters, and number of layers)
+models_metadata = [[]]
+
+# Each model in 'models' at the i'th spot should have corresponding metadata at the i'th position of 'models_metadata'
+assert(len(models) == len(models_metadata))
+
+# How many rows and cols
+audit_data_metadata = []
+# end@args
+
+# Grab model(s)
+
+# Grab metric(s)
+
+# For each model
+## For all data
+### a = model.classify(data)
+
+## For each metric
+### metric(a, args)
+
+# Return class labels to Bob
