@@ -24,7 +24,7 @@ def dot_product(a, b): # The Array class has a dot product, should use that
     return res
   
   
-def sig(x):
+def sigmoid(x):
     return 1 / (1 + e**(-x))
 
 
@@ -74,7 +74,7 @@ def infer_data(model, data, param_size, row_length):
 
     @for_range_opt(row_length)
     def _(i):
-        label_intermediate = sig(dot_product(model[0], data[i]) + model[1])
+        label_intermediate = sigmoid(dot_product(model[0], data[i]) + model[1])
         label = cmp_against >= label_intermediate
         predicted_labels[i] = label
 
