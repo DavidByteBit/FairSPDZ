@@ -24,15 +24,12 @@ def run():
 
     metadata = None
 
-
     # Execution depends on if the party owns the model or auditing data.
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
-        processModel.lr(settings_map)
+        metadata = processModel.lr(settings_map)
     elif type_of_data.equals("audit"):
         metadata = write_data(settings_map)
-
-    print(metadata)
 
     # metadata should be a list
     assert (isinstance(metadata, list))
