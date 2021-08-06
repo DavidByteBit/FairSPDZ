@@ -78,13 +78,13 @@ def write_data(settings_map):
 
             rows += 1
 
-            line = line.replace("\n", "")
+            line = line.replace("\n", "").split(",")
 
             data.extend(line)
 
             # TODO: Kind of sloppy, should optimize
             if grab_features:
-                cols = len(line.split(","))
+                cols = len(line)
                 grab_features = False
 
     # Grab audit labels
