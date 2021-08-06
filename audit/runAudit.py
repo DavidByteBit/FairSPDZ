@@ -164,7 +164,7 @@ def validate_settings(settings_map):
 
 
     # Validate variables
-    if settings_map["type_of_data"] != "audit" or settings_map["type_of_data"] != "model":
+    if settings_map["type_of_data"] != "audit" and settings_map["type_of_data"] != "model":
         error_msg = "The type of data is not valid. Only valid options are \'audit\' and \'model\' \n"
 
         error_found = True
@@ -172,7 +172,7 @@ def validate_settings(settings_map):
         print(error_msg)
 
 
-    if settings_map["compile"] != "true" or settings_map["compile"] != "false":
+    if settings_map["compile"] != "true" and settings_map["compile"] != "false":
         error_msg = "Compile value not valid. Should be \'true\' or \'false\' \n"
 
         error_found = True
