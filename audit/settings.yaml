@@ -1,0 +1,9 @@
+---
+ path_to_public_data: "/home/david/Desktop/"
+ type_of_data: "audit"
+ path_to_private_data: "/home/david/Desktop/"
+ path_to_this_repo: "/home/david/Desktop/"
+ path_to_top_of_mpspdz: "/home/david/Desktop/spdz"
+ compile: "True"
+ model_type: "lr"
+ metrics: "1,2,3"

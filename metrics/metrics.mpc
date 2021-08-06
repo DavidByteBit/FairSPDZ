@@ -1,0 +1,57 @@
+
+
+class metric():
+    """ Class defines multiple metrics for determining fairness
+    :param actual_labels: Actual labels of the data
+    :param predicted_labels: Predicted labels of the data
+    """
+    def __init__(self, actual_labels, predicted_labels, debug=False, report_loss=None):
+        self.actual_labels = actual_labels
+        self.predicted_labels = predicted_labels
+
+
+    def traditional_metrics(self):
+        """ Calculates some of the most common metrics:
+            True Positive (TP)
+            False Positive (FP)
+            True Negative (TN)
+            False Negative (FN)
+
+            Calculating TP gives us FP nearly for free. Likewise, TN and FN have have the same relationship. This,
+            and the fact that it takes the same communication/local complexity to calculate all at once,
+            makes it advantageous to calculate all values in one call.
+
+            input actual_labels: The shares of the actual labels of data
+            input predicted_labels: The shares of the predicted labels of data
+
+            TODO: Make sure I can actually return a tuple, or tuple like answer in MP-SPDZ
+            returns (TP, FP, TN, FN) """
+
+        actual_labels  = self.actual_labels
+        predicted_labels = self.predicted_labels
+
+        l = len(actual_labels)
+
+        assert(l == len(predicted_labels))
+
+        TP = sint(0)
+        FP = sint(0)
+        TN = sint(0)
+        FN = sint(0)
+
+        @for_range_opt(l)
+        def _(i):
+            a = predicted_labels[i]
+            b = actual_labels[i]
+
+            x = (a == 1)
+            y = (b == 1)
+            z = 1 - x
+            w = 1 - y
+
+            TN += z * w
+            FP += z * b
+            FN += x * w
+            TP += x * y
+
+        return TP, FP, TN, FN
