@@ -148,7 +148,7 @@ def validate_settings(settings_map):
         if not path.exists(settings_map["path_to_top_of_mpspdz"] + "/semi2k-party.x"):
             user_in = input("The virtual machine \'semi2k-party.x\' has not been compiled.\n"
                             "In order to run this code, it must be compiled.\n"
-                            "Would you like for us to create it? (y/n):\t").lower()
+                            "Would you like for us to create it? (y/n):").lower()
 
             if user_in == "y" or user_in == "yes":
                 subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/compileVM.sh %s" %
