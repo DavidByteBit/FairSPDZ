@@ -32,6 +32,7 @@ def run():
     elif type_of_data.equals("audit"):
         metadata = write_data(settings_map)
 
+    print(metadata)
 
     # metadata should be a list
     assert (isinstance(metadata, list))
