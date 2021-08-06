@@ -1,5 +1,5 @@
 ---
- path_to_public_data: "/home/david/Desktop/data/lr_model.sav"
+ path_to_public_data: "/home/david/Desktop/fspdz/data/lr_model.sav"
  type_of_data: "model"
  path_to_private_data: "/home/david/Desktop/spdz/Player-Data/Input-P0-0"
  path_to_this_repo: "/home/david/Desktop/fspdz"

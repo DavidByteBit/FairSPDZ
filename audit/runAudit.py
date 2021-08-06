@@ -106,13 +106,8 @@ def parse_settings():
         except yaml.YAMLError as exc:
             print(exc)
 
-    print(settings_map)
-
-    # TODO: Confirm this works..
     for key in settings_map:
         settings_map[key] = settings_map[key].lower()
-
-    print(settings_map)
 
     return settings_map
 
