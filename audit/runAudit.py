@@ -1,6 +1,7 @@
 import yaml
 import subprocess
 import sys
+from processModelData import lr
 import math
 import os.path
 
@@ -27,6 +28,9 @@ def run():
     # Execution depends on if the party owns the model or auditing data.
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
+
+        lr.run(settings_map)
+
         path = "/ProcessModelData/" + settings_map["model_type"] + ".py"
 
         print(path)

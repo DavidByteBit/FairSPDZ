@@ -2,8 +2,8 @@ import sys
 import json
 
 
-def run():
-    settings_map = json.loads(sys.argv[1])
+def run(settings_map):
+    # settings_map = json.loads(sys.argv[1])
 
     public_path = settings_map["path_to_public_data"]
     private_path = settings_map["path_to_private_data"]
