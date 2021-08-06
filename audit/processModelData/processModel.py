@@ -19,5 +19,5 @@ def lr(settings_map):
     with open(private_path, 'w') as stream:
         stream.write(",".join(params))
 
-    return len(params)
+    return [len(params)]
 
