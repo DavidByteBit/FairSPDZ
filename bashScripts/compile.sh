@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm ../spdz/Programs/Source/audit.mpc
-cp audit.mpc ../spdz/Programs/Source/audit.mpc
-./../spdz/compile.py -R 64 -Z 2 audit
+rm ../spdz/Programs/Source/runAudit.mpc
+cp runAudit.mpc ../spdz/Programs/Source/runAudit.mpc
+./../spdz/compile.py -R 64 -Z 2 runAudit
