@@ -28,6 +28,7 @@ def run():
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
         path = "/ProcessModelData/" + settings_map["model_type"] + ".py"
+
         print(path)
         metadata = subprocess.check_output([sys.executable, path, settings_map])
 
