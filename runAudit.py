@@ -181,8 +181,4 @@ def validate_settings(settings_map):
         raise Exception("There was an error with the settings file. Please look above to determine what the error was "
                         "\n")
 
-
-
-
-
 run()

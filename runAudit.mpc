@@ -104,7 +104,8 @@ TN = sint(0)
 FN = sint(0)
 
 # Count correctly and incorrectly classified labels
-for i in range(row_length):
+@for_range_opt(row_length)
+def _(i):
     a = predicted_labels[i]
     b = actual_labels[i]
 
