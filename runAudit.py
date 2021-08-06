@@ -43,7 +43,7 @@ def run():
     # stall
     input("ready?")
 
-    party = settings_map["party"]
+    party = int(settings_map["party"])
 
     # run program
     subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/run.sh", party)
