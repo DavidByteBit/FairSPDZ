@@ -13,7 +13,7 @@ models = []
 models_metadata = [[]]
 
 # Each model in 'models' at the i'th spot should have corresponding metadata at the i'th position of 'models_metadata'
-assert(len(models) == len(models_metadata))
+# assert(len(models) == len(models_metadata))
 
 # How many rows and cols
 audit_data_metadata = []
