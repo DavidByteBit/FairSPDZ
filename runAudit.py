@@ -40,6 +40,11 @@ def run():
     if settings_map["compile"] == "true":
         subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/compile.sh")
 
+    # stall
+    input("ready?")
+
+    # run program
+    subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/compile.sh")
 
 # This will have to change. It should accept an online connection with the other party.
 def populate_public_inputs(settings_map, data):
