@@ -28,14 +28,7 @@ def run():
     # Execution depends on if the party owns the model or auditing data.
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
-
         processModel.lr(settings_map)
-
-        path = "/ProcessModelData/" + settings_map["model_type"] + ".py"
-
-        print(path)
-        metadata = subprocess.check_output([sys.executable, path, settings_map])
-
     elif type_of_data.equals("audit"):
         metadata = write_data(settings_map)
 
