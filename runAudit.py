@@ -46,6 +46,7 @@ def populate_public_inputs(settings_map, data):
 
     path = settings_map["path_to_top_of_mpspdz"] + "/Programs/Public-Input/audit"
 
+
     with open(path, 'a') as stream:
         stream.write(" ".join(data) + " ")
 
@@ -90,7 +91,7 @@ def write_data(settings_map):
         s = " ".join(data)
         stream.write(s)
 
-    return [rows, cols]
+    return [str(rows), str(cols)]
 
 
 def parse_settings():
