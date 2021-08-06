@@ -103,23 +103,20 @@ FP = sint(0)
 TN = sint(0)
 FN = sint(0)
 
-i = 0
-
 # Count correctly and incorrectly classified labels
-# @for_range_opt(row_length)
-# def _(i):
-a = predicted_labels[i]
-b = actual_labels[i]
+for i in range(row_length):
+    a = predicted_labels[i]
+    b = actual_labels[i]
 
-x = (a == sint(1))
-y = (b == sint(1))
-z = sint(1) - x
-w = sint(1) - y
+    x = (a == sint(1))
+    y = (b == sint(1))
+    z = sint(1) - x
+    w = sint(1) - y
 
-TN += z * w
-FP += z * b
-FN += x * w
-TP += x * y
+    TN += z * w
+    FP += z * b
+    FN += x * w
+    TP += x * y
 
 # Not working yet
 print_ln('TP for%s:%s', "Bob", TP.reveal())
