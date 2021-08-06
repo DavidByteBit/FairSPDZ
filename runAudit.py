@@ -46,7 +46,7 @@ def run():
     party = int(settings_map["party"])
 
     # run program
-    subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/run.sh", party)
+    subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/run.sh %s" % party, shell=True)
 
 # This will have to change. It should accept an online connection with the other party.
 def populate_public_inputs(settings_map, data):
