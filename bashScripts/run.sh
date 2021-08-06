@@ -1,7 +1,6 @@
 #!/bin/bash
 
-path=$1
-party=$2
+party=$1
 
 # TODO: make dynamic
 ./../spdz/semi2k-party.x -N 2 -p "$party" runAudit
