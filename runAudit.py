@@ -151,7 +151,7 @@ def validate_settings(settings_map):
                             "Would you like for us to create it? (y/n)").lower()
 
             if user_in == "y" or user_in == "yes":
-                subprocess.call(settings_map['path_to_this_repo'] + "/bash_scripts/makeVM.sh %s" %
+                subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/compileVM.sh %s" %
                                 settings_map["path_to_top_of_mpspdz"],
                                 shell=True)
 
