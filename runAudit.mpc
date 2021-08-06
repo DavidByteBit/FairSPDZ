@@ -7,10 +7,10 @@ from Compiler import ml
 # from Compiler.library import public_input()
 import sys
 
-# PUBLIC PARAMS
-row_length = public_input()
-col_length = public_input()
-num_of_params = public_input()
+# PUBLIC PARAMS TODO: Make first three dynamic
+row_length = 1000
+col_length = 48
+num_of_params = 49
 ALICE = 0
 BOB = 1
 
