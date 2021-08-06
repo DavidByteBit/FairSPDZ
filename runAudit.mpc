@@ -108,10 +108,10 @@ for i in range(row_length):
     a = predicted_labels[i]
     b = actual_labels[i]
 
-    x = (a == 1)
-    y = (b == 1)
-    z = 1 - x
-    w = 1 - y
+    x = (a == sint(1))
+    y = (b == sint(1))
+    z = sint(1) - x
+    w = sint(1) - y
 
     TN += z * w
     FP += z * b
