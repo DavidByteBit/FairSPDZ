@@ -126,8 +126,8 @@ def validate_settings(settings_map):
 
 
     if not path.exists(settings_map["path_to_private_data"]):
-        error_msg = "Path to private data ({n}) not found\n" \
-                    "In your settings file, check \'path_to_private_data\' " \
+        error_msg = "\tPath to private data ({n}) not found\n" \
+                    "\tIn your settings file, check \'path_to_private_data\' " \
                     "to confirm if it is correct\n".format(n=settings_map["path_to_private_data"])
 
         error_found = True
