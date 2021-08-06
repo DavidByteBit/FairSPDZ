@@ -1,7 +1,7 @@
 import yaml
 import subprocess
 import sys
-from processModelData import lr
+from processModelData import processModel
 import math
 import os.path
 
@@ -29,7 +29,7 @@ def run():
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
 
-        lr.run(settings_map)
+        processModel.lr(settings_map)
 
         path = "/ProcessModelData/" + settings_map["model_type"] + ".py"
 

@@ -2,7 +2,7 @@ import sys
 import json
 
 
-def run(settings_map):
+def lr(settings_map):
     # settings_map = json.loads(sys.argv[1])
 
     public_path = settings_map["path_to_public_data"]
@@ -21,5 +21,3 @@ def run(settings_map):
 
     return len(params)
 
-
-run()
