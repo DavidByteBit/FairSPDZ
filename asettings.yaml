@@ -7,3 +7,4 @@
  compile: "false"
  model_type: "lr"
  metrics: "1,2,3"
+ party: "0"
