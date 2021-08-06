@@ -37,7 +37,7 @@ def run():
     populate_public_inputs(settings_map, metadata)
 
     # Compile .mpc program
-    subprocess.call(settings_map['path_to_this_repo'] + "/bash_scripts/compile.sh")
+    subprocess.call(settings_map['path_to_this_repo'] + "/bashScripts/compile.sh")
 
 
 # This will have to change. It should accept an online connection with the other party.
