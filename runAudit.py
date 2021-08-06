@@ -28,7 +28,7 @@ def run():
     # Will also collect metadata for for .mpc file
     if type_of_data == "model":
         metadata = processModel.lr(settings_map)
-    elif type_of_data.equals("audit"):
+    elif type_of_data == "audit":
         metadata = write_data(settings_map)
 
     # metadata should be a list
