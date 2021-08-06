@@ -4,12 +4,13 @@
 
 from Compiler import mpc_math
 from Compiler import ml
+# from Compiler.library import public_input()
 import sys
 
 # PUBLIC PARAMS
-row_length = cint.public_input()
-col_length = cint.public_input()
-num_of_params = cint.public_input()
+row_length = public_input()
+col_length = public_input()
+num_of_params = public_input()
 ALICE = 0
 BOB = 1
 
