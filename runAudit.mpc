@@ -77,6 +77,22 @@ def infer_data(model, data, param_size, row_length):
     return predicted_labels
 
 
+
+
+
+# model.classify(encrypted_data)
+
+
+
+
+
+
+
+
+
+
+
+
 # Command line arguments do not work, so this code is no good
 # 0: Number of Params, 1: Number of rows in data
 # args = sys.argv[1:]

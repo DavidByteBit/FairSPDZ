@@ -1,5 +1,3 @@
-
-
 class metric():
     """ Class defines multiple metrics for determining fairness
     :param actual_labels: Actual labels of the data
