@@ -25,7 +25,7 @@ class logistic_regression(model):
         # Example of how to call parents constructor (you don't have to use it if you don't feel a need for it)
         super().__init__(0)
 
-    # (Note) This will have to later be replaced with MP-SPDZ friendly code (one reason it is unfriendly is that is
+    # (Note) This will have to later be replaced with MP-SPDZ friendly code (one reason it is unfriendly is
     # that we can't have x in the denominator - this has to do with how our encrypted shares of data 'live' in a
     # mathematical ring. Values in a ring may not have an multiplicative inverse). For now, this will do just fine
     # though.
