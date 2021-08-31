@@ -42,8 +42,8 @@ def compile_spdz(settings_map, all_metadata):
     if online.lower() == "false":
         if settings_map["type_of_data"] == "model":
 
-            subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-            subprocess.check_call("../spdz/Compiler/models.py")
+            # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+            # subprocess.check_call("rm ../spdz/Compiler/models.py")
             subprocess.check_call("cp run.mpc ../spdz/Programs/Source/run.mpc")
             subprocess.check_call("cp models/models.py ../spdz/Compiler/models.py")
             subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
