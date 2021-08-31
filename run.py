@@ -49,7 +49,7 @@ def distribute_Data(settings_map, metadata):
         for i in range(parties - 1):
             data = server.run(settings_map)  # rec
             other_parties_id = int(data[0])
-            others_metadata = __convertStringToList(data[1:])
+            others_metadata = data[1:]
             all_metadata.insert(other_parties_id, others_metadata)
 
             all_metadata.append(settings_map["party"] + metadata)
