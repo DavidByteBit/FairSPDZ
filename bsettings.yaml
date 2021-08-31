@@ -9,5 +9,5 @@
  compile: "false"
  model_type: "lr"
  metrics: "1,2,3"
- num_of_parties: "3"
+ num_of_parties: "2"
  party: "1"
