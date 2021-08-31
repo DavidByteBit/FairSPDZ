@@ -5,7 +5,7 @@ def run(settings_map, metadata=None):
     if metadata is not None:
         _client_send(settings_map, metadata)
     else:
-        return _client_rec()
+        return _client_rec(settings_map)
 
 
 
