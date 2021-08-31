@@ -13,12 +13,17 @@ from processModelData import processModel
 
 def run():
     # Path to settings file
+
+    print("parsing settings")
     settings_map = parse_settings()
 
+    print("validating settings")
     validate_settings(settings_map)
 
+    print("processing data and retrieving its metadata")
     metadata = getMetaData(settings_map)
 
+    print("distributing data")
     distribute_Data(settings_map, metadata)
 
     # compile[cols, rows, stuff...]
@@ -35,6 +40,7 @@ def distribute_Data(settings_map, metadata):
 
     # This block should give the model owner everyone else's data
     if is_model_owner:
+        print("setting up server")
         for i in range(parties - 1):
             data = server.run(settings_map)  # rec
             other_parties_id = int(data[0])
