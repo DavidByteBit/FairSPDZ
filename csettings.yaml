@@ -12,4 +12,5 @@
  num_of_parties: "3"
  party: "2"
  compiler: "-R 64 -Y run"
+ VM: "./replicated-ring-party.x 2 run"
  online: "false"
