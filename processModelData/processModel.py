@@ -2,7 +2,7 @@ import sys
 import json
 
 
-def lr(settings_map):
+def logistic_regression(settings_map):
     # settings_map = json.loads(sys.argv[1])
 
     public_path = settings_map["path_to_public_data"]

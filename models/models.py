@@ -13,9 +13,10 @@ e = math.e
 
 class model():
 
-    def __init__(self):
-        # TODO: Figure out the best way to implement the layers
-        pass
+    def __init__(self, all_metadata, model_owner_id):
+        self.all_metadata = all_metadata
+        self.model_owner_id = model_owner_id
+
 
     # Reads model params into a tensor
     def read(self, raw_model):
@@ -55,18 +56,60 @@ def dp(a, b):
 class logistic_regression(model):
     """ Class that allows us to read, and classify with a logistic regression model."""
 
-    def __init__(self, data, raw_model):
+    def __init__(self, all_metadata, model_owner_id):
         """Constructor."""
 
-        # Example of how to call parents constructor (you don't have to use it if you don't feel a need for it)
-        super().__init__()
+        super().__init__(all_metadata, model_owner_id)
+        param_size = int(all_metadata[model_owner_id].replace('[', '').replace(']', ''))
+        self.model = self.load_model(param_size, model_owner_id)
+
+        self.b = self.model[0]
+        # TODO: Test to make sure the Array is correctly initialized
+        self.W = self.model[1:]
+
+        parties = len(all_metadata)
+
+        each_parties_rows = []
+        total_amount_of_rows = 0
+        cols = param_size - 1
+
+        for i in list(range(model_owner_id)) + list(range(model_owner_id + 1, parties)):
+            metadata = all_metadata[i].replace('[', '').replace(']', '').split(",")
+            rows = int(metadata[0])
+            total_amount_of_rows += rows
+            each_parties_rows.append((rows, i))
+
+        self.data = sfix.Matrix(total_amount_of_rows, cols)
+
+        for i in list(range(model_owner_id)) + list(range(model_owner_id + 1, parties)):
+            self.data.assign(self.load_data(cols, each_parties_rows[i][0], each_parties_rows[i][1]))
 
         # Example of how to make a field variable
-        self.sample_size = data.len()
-        self.data = data
-        self.b = raw_model[0]
-        # TODO: Test to make sure the Array is correctly initialized
-        self.W = raw_model[1:]
+        self.sample_size = self.data.len()
+
+
+    def load_model(self, param_size, model_owner_id):
+        model_coefs = Array(param_size - 1, sfix)
+
+        @for_range_opt(param_size - 1)
+        def _(i):
+            model_coefs[i] = sfix.get_input_from(model_owner_id)
+
+        bias = sfix.get_input_from(model_owner_id)
+
+        return (model_coefs, bias)
+
+
+    def load_data(self, cols, row_length, party_id):
+        data = Matrix(row_length, cols, sfix)
+
+        @for_range_opt(row_length)
+        def _(i):
+            @for_range_opt(cols)
+            def _(j):
+                data[i][j] = sfix.get_input_from(party_id)
+
+        return data
 
 
     def classify(self):

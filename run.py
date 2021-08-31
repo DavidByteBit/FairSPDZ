@@ -10,7 +10,6 @@ from os import path
 from processModelData import processModel
 
 
-
 def run():
     # Path to settings file
 
@@ -25,15 +24,33 @@ def run():
     print(metadata)
 
     print("distributing data")
-    distribute_Data(settings_map, metadata)
+    all_metadata = distribute_Data(settings_map, metadata)
 
-    # compile[cols, rows, stuff...]
+    compile_spdz(settings_map, all_metadata)
 
     # run MP-SPDZ
 
 
-def distribute_Data(settings_map, metadata):
+def compile_spdz(settings_map, all_metadata):
+    # Compile .mpc program
+    c = settings_map["compiler"]
+    num_of_parties = settings_map["num_of_parties"]
+    model_type = settings_map["model_type"]
+    model_owner_id = 0
+    for i in range(len(all_metadata)):
+        data = all_metadata[i]
+        if "@model" in data:
+            model_owner_id = i
+            break
+    model_data_metadata = all_metadata[model_owner_id].replace("@model", '')
+    del all_metadata[model_owner_id]
+    audit_data_metadata = all_metadata
 
+    subprocess.check_call([settings_map['path_to_this_repo'] + "/bash_scripts/compile.sh", c, num_of_parties,
+                           model_owner_id, model_type, audit_data_metadata, model_data_metadata])
+
+
+def distribute_Data(settings_map, metadata):
     is_model_owner = bool(settings_map["type_of_data"] == "model")
     parties = int(settings_map["num_of_parties"])
     party_id = int(settings_map["party"])
@@ -43,7 +60,7 @@ def distribute_Data(settings_map, metadata):
     # asynchronous execution to distribute data
     if is_model_owner:
 
-        all_metadata.insert(party_id, metadata)
+        all_metadata.insert(party_id, metadata + "@model")
 
         print("setting up server")
         for i in range(parties - 1):
@@ -64,20 +81,16 @@ def distribute_Data(settings_map, metadata):
         all_metadata = client.run(settings_map).split("@seperate")
 
     print(all_metadata)
-
-def __convertStringToList(a):
-    a = a.replace("[", "").replace("]", "")
-    return a.split(",")
+    return all_metadata
 
 
 def getMetaData(settings_map):
-
     own_model = bool(settings_map["type_of_data"] == "model")
 
     metadata = None
 
     if own_model:
-        metadata = processModel.lr(settings_map)
+        metadata = processModel.logistic_regression(settings_map)
     else:
         metadata = write_data(settings_map)
 
@@ -155,7 +168,6 @@ def validate_settings(settings_map):
 
         print(error_msg)
 
-
     if not path.exists(settings_map["path_to_private_data"]):
         error_msg = "\tPath to private data ({n}) not found\n" \
                     "\tIn your settings file, check \'path_to_private_data\' " \
@@ -164,7 +176,6 @@ def validate_settings(settings_map):
         error_found = True
 
         print(error_msg)
-
 
     if not path.exists(settings_map["path_to_this_repo"]):
         error_msg = "Path to this repo not found\n" \
@@ -194,7 +205,6 @@ def validate_settings(settings_map):
                                 settings_map["path_to_top_of_mpspdz"],
                                 shell=True)
 
-
     # Validate variables
     if settings_map["type_of_data"] != "audit" and settings_map["type_of_data"] != "model":
         error_msg = "The type of data is not valid. Only valid options are \'audit\' and \'model\' \n"
@@ -203,7 +213,6 @@ def validate_settings(settings_map):
 
         print(error_msg)
 
-
     if settings_map["compile"] != "true" and settings_map["compile"] != "false":
         error_msg = "Compile value not valid. Should be \'true\' or \'false\' \n"
 
@@ -211,12 +220,12 @@ def validate_settings(settings_map):
 
         print(error_msg)
 
-
     # TODO: verify if models and metrics are correct
 
     if error_found:
         raise Exception("There was an error with the settings file. Please look above to determine what the error was "
                         "\n")
+
 
 # For now, settings file will contain path to top of MP-SPDZ directory,
 # Alice (0) or Bob (1), others IP address, path to file (model or data) (Could be multiple)
@@ -239,7 +248,3 @@ run()
 # Recompile the .mpc file
 
 # Call bash script to run runAudit.mpc - pass in path
-
-
-
-
