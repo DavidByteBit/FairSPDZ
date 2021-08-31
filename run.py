@@ -213,7 +213,9 @@ def validate_settings(settings_map):
 ## Receive model name and metadata about model from Alice
 
 # Example
-subprocess.run(["ls"])
+# subprocess.run(["ls"])
+
+run()
 
 # Call editArgs. Pass in model names, model metadata, audit data metadata, and the path to the .mpc file
 
