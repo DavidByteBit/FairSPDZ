@@ -10,4 +10,4 @@
  model_type: "lr"
  metrics: "1,2,3"
  num_of_parties: "3"
- party: "1"
+ party: "2"
