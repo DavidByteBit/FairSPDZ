@@ -21,7 +21,8 @@ except:
 
 if model_type == "lr":
     lr = models.logistic_regression(all_metadata, model_owner_id)
-
+    classifications = lr.classify()
+    print_ln("%s", classifications.reveal())
 
 def dot_product(a, b):  # The Array class has a dot product, should use that
     assert (len(a) == len(b))
