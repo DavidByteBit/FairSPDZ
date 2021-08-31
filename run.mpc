@@ -5,7 +5,6 @@
 from Compiler import mpc_math
 from Compiler import ml
 from Compiler import models
-from models import models
 # from Compiler.library import public_input()
 
 program.options_from_args()
