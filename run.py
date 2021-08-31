@@ -65,7 +65,7 @@ def getMetaData(settings_map):
     else:
         metadata = write_data(settings_map)
 
-    return metadata
+    return str(metadata)
 
 
 def write_data(settings_map):
