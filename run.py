@@ -46,7 +46,7 @@ def distribute_Data(settings_map, metadata):
             data = server.run(settings_map)  # rec
             other_parties_id = int(data[0])
             others_metadata = data[1:]
-            all_metadata[other_parties_id] = others_metadata
+            all_metadata[other_parties_id - 1] = others_metadata
     else:
         client.run(settings_map, metadata)
 
