@@ -37,7 +37,7 @@ def distribute_Data(settings_map, metadata):
     is_model_owner = bool(settings_map["type_of_data"] == "model")
     parties = int(settings_map["num_of_parties"])
 
-    all_metadata = [] * (parties - 1)
+    all_metadata = [None] * (parties - 1)
 
     # This block should give the model owner everyone else's data
     if is_model_owner:
