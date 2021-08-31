@@ -19,7 +19,7 @@ def _client_send(settings_map, metadata):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host_ip, host_port))
         print("sending: " + str(party_id) + metadata)
-        s.sendall(str.encode(str(party_id) + metadata))
+        s.sendall(str(party_id) + metadata)
         # data = s.recv(1024)
 
     # print('Received', repr(data))
