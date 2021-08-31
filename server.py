@@ -6,9 +6,9 @@ from _thread import *
 def run(settings_map, metadata=None):
 
     if metadata is not None:
-        return _setup_server_rec(settings_map)
-    else:
         _setup_server_send(settings_map, metadata)
+    else:
+        return _setup_server_rec(settings_map)
 
 
 def _setup_server_send(settings_map, metadata):
@@ -30,7 +30,7 @@ def _setup_server_send(settings_map, metadata):
 def _setup_server_rec(settings_map):
 
     host_ip = settings_map['model_holders_ip']
-    host_port = settings_map['model_holders_port']
+    host_port = int(settings_map['model_holders_port'])
 
     others_metadata = None
 
