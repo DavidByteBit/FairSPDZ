@@ -34,13 +34,13 @@ def run():
 def compile_spdz(settings_map, all_metadata):
     # Compile .mpc program
     c = settings_map["compiler"]
-    num_of_parties = settings_map["num_of_parties"]
+    num_of_parties = str(settings_map["num_of_parties"])
     model_type = settings_map["model_type"]
     model_owner_id = 0
     for i in range(len(all_metadata)):
         data = all_metadata[i]
         if "@model" in data:
-            model_owner_id = i
+            model_owner_id = str(i)
             break
     model_data_metadata = all_metadata[model_owner_id].replace("@model", '')
     del all_metadata[model_owner_id]
