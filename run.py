@@ -50,6 +50,8 @@ def distribute_Data(settings_map, metadata):
 
             all_metadata.append(settings_map["party"] + metadata)
 
+            print(all_metadata)
+
             all_metadata = "@seperate".join(all_metadata)
 
         for i in range(parties - 1):
@@ -58,14 +60,6 @@ def distribute_Data(settings_map, metadata):
     else:
         client.run(settings_map, metadata)
         all_metadata = client.run(settings_map).split("@seperate")
-
-    print(all_metadata)
-
-
-
-
-
-
 
 
 def getMetaData(settings_map):
