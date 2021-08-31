@@ -28,7 +28,7 @@ def _client_send(settings_map, metadata):
 def _client_rec(settings_map):
 
     host_ip = settings_map['model_holders_ip']
-    host_port = settings_map['model_holders_port']
+    host_port = int(settings_map['model_holders_port'])
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host_ip, host_port))
