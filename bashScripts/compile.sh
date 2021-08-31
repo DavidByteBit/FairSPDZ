@@ -18,7 +18,7 @@ then
     rm ../spdz/Compiler/models.py
     cp run.mpc ../spdz/Programs/Source/run.mpc
     cp models/models.py ../spdz/Compiler/models.py
-    echo running ./../spdz/compile.py "$compile"
+    echo running ./../spdz/compile.py "$compile" "$num_of_parties" "$model_owner_id" "$model_type" "$audit_data_metadata" "$model_data_metadata"
     ./../spdz/compile.py "$compile" "$num_of_parties" "$model_owner_id" "$model_type" "$audit_data_metadata" "$model_data_metadata"
   fi
 fi
