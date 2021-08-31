@@ -48,7 +48,7 @@ def compile_spdz(settings_map, all_metadata):
 
     model_owner_id = str(model_owner_id)
     subprocess.check_call([settings_map['path_to_this_repo'] + "/bash_scripts/compile.sh", c, num_of_parties,
-                           model_owner_id, model_type, audit_data_metadata, model_data_metadata])
+                           model_owner_id, model_type, str(audit_data_metadata), str(model_data_metadata)])
 
 
 def distribute_Data(settings_map, metadata):
