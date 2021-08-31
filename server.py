@@ -45,7 +45,7 @@ def _setup_server_rec(settings_map):
             while True:
                 time.sleep(2)
                 data = conn.recv(1024).decode()
-                if others_metadata is not None:
+                if others_metadata is None:
                     data = others_metadata
                 if not data:
                     break
