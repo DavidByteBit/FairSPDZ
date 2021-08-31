@@ -45,4 +45,5 @@ def _setup_server_rec(settings_map):
                 if not others_metadata:
                     break
 
+    print(others_metadata)
     return others_metadata
