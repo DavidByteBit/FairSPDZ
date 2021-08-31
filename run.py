@@ -43,7 +43,7 @@ def compile_spdz(settings_map, all_metadata):
             model_owner_id = str(i)
             break
     model_data_metadata = all_metadata[model_owner_id].replace("@model", '')
-    del all_metadata[model_owner_id]
+    del all_metadata[int(model_owner_id)]
     audit_data_metadata = all_metadata
 
     subprocess.check_call([settings_map['path_to_this_repo'] + "/bash_scripts/compile.sh", c, num_of_parties,
