@@ -1,5 +1,7 @@
 import socket
 import os
+import time
+
 from _thread import *
 
 
@@ -41,7 +43,8 @@ def _setup_server_rec(settings_map):
         with conn:
             print('Connected by', addr)
             while True:
-                others_metadata = conn.recv(1024)
+                time.sleep(2)
+                others_metadata = conn.recv(1024).decode()
                 if not others_metadata:
                     break
 
