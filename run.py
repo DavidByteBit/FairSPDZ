@@ -35,7 +35,7 @@ def run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    run_cmd = "./{a}{b}".format(a=path_to_spdz, b=runner)
+    run_cmd = ".{a}/{b}".format(a=path_to_spdz, b=runner)
 
     print(run_cmd)
 

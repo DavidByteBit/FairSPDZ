@@ -12,5 +12,5 @@
  num_of_parties: "2"
  party: "0"
  compiler: "-R 64 -Y run"
- VM: "./replicated-ring-party.x 0 run"
+ VM: "replicated-ring-party.x 0 run"
  online: "false"
