@@ -11,5 +11,5 @@
  metrics: "1,2,3"
  num_of_parties: "3"
  party: "2"
- compiler: "-R 64 -Y runLR"
+ compiler: "-R 64 -Y run"
  online: "false"
