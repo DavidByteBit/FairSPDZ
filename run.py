@@ -36,7 +36,7 @@ def distribute_Data(settings_map, metadata):
 
     is_model_owner = bool(settings_map["type_of_data"] == "model")
     parties = int(settings_map["num_of_parties"])
-    party_id = settings_map["party"]
+    party_id = int(settings_map["party"])
 
     all_metadata = [''] * (parties - 1)
 
