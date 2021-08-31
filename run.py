@@ -36,22 +36,28 @@ def compile_spdz(settings_map, all_metadata):
     c = settings_map["compiler"]
     num_of_parties = str(settings_map["num_of_parties"])
     model_type = settings_map["model_type"]
-    model_owner_id = 0
-    for i in range(len(all_metadata)):
-        data = all_metadata[i]
-        if "@model" in data:
-            model_owner_id = i
-            break
-    model_data_metadata = all_metadata[model_owner_id].replace("@model", '')
-    del all_metadata[model_owner_id]
-    audit_data_metadata = all_metadata
     online = settings_map["online"]
-    personal_id = settings_map["party"]
+    model_owner_id = 0  # TODO: Make dynamic
 
-    model_owner_id = str(model_owner_id)
-    subprocess.check_call([settings_map['path_to_this_repo'] + "/bashScripts/compile.sh", c, num_of_parties,
-                           model_owner_id, model_type, str(audit_data_metadata), str(model_data_metadata), online,
-                           personal_id])
+    if online.lower() == "false":
+        if settings_map["type_of_data"] == "model":
+
+            subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+            subprocess.check_call("../spdz/Compiler/models.py")
+            subprocess.check_call("cp run.mpc ../spdz/Programs/Source/run.mpc")
+            subprocess.check_call("cp models/models.py ../spdz/Compiler/models.py")
+            subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
+                                                                                    c=model_owner_id, d=model_type,
+                                                                                    e=all_metadata))
+    else:
+
+        subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+        subprocess.check_call("../spdz/Compiler/models.py")
+        subprocess.check_call("cp run.mpc ../spdz/Programs/Source/run.mpc")
+        subprocess.check_call("cp models/models.py ../spdz/Compiler/models.py")
+        subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
+                                                                                c=model_owner_id, d=model_type,
+                                                                                e=all_metadata))
 
 
 def distribute_Data(settings_map, metadata):

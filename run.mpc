@@ -13,15 +13,14 @@ try:
     num_of_parties= int(program.args[1])
     model_owner_id= int(program.args[2])
     model_type = program.args[3]
-    audit_data_metadata = program.args[4]
-    model_data_metadata = program.args[5]
+    all_metadata = program.args[4]
 except:
     print("WARNING - Could not read args correctly")
     raise Exception
 
 
 if model_type == "lr":
-    lr = models.logistic_regression()
+    lr = models.logistic_regression(all_metadata, model_owner_id)
 
 
 def dot_product(a, b):  # The Array class has a dot product, should use that
