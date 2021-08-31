@@ -2,7 +2,7 @@
  path_to_public_data: "/home/david/Desktop/fspdz/data/lr_model.sav"
  type_of_data: "model"
  model_holders_ip: "127.0.0.1"
- model_holders_port: "5011"
+ model_holders_port: "5012"
  path_to_private_data: "/home/david/Desktop/spdz/Player-Data/Input-P0-0"
  path_to_this_repo: "/home/david/Desktop/fspdz"
  path_to_top_of_mpspdz: "/home/david/Desktop/spdz"
