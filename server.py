@@ -27,7 +27,7 @@ def _setup_server_send(settings_map, metadata):
         with conn:
             _ = conn.recv(1024)
             print('Connected by', addr)
-            conn.sendall(metadata)
+            conn.sendall(str.encode(metadata))
 
 
 def _setup_server_rec(settings_map):
