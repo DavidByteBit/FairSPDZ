@@ -43,10 +43,9 @@ def _setup_server_rec(settings_map):
         with conn:
             print('Connected by', addr)
             while True:
-                time.sleep(2)
                 data = conn.recv(1024).decode()
                 if others_metadata is None:
-                    data = others_metadata
+                    others_metadata = data
                 if not data:
                     break
 
