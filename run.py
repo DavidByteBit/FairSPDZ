@@ -45,12 +45,12 @@ def compile_spdz(settings_map, all_metadata):
             # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
             # subprocess.check_call("rm ../spdz/Compiler/models.py")
             subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]))
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
             subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]))
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
             subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
                                                                                     c=model_owner_id, d=model_type,
-                                                                                    e=all_metadata))
+                                                                                    e=all_metadata), shell=True)
     else:
 
         # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
