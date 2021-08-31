@@ -57,7 +57,7 @@ def distribute_Data(settings_map, metadata):
         for i in range(parties - 1):
             server.run(settings_map, all_metadata)
 
-        all_metadata = join(all_metadata).split("@seperate")
+        all_metadata = all_metadata.split("@seperate")
 
     else:
         client.run(settings_map, metadata)
