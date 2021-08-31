@@ -12,3 +12,4 @@
  num_of_parties: "2"
  party: "0"
  compiler: "-R 64 -Y runLR"
+ online: "false"
