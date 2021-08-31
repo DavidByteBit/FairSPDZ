@@ -38,7 +38,7 @@ def distribute_Data(settings_map, metadata):
     parties = int(settings_map["num_of_parties"])
     party_id = int(settings_map["party"])
 
-    all_metadata = [''] * (parties - 1)
+    all_metadata = [''] * parties
 
     # asynchronous execution to distribute data
     if is_model_owner:
@@ -52,12 +52,12 @@ def distribute_Data(settings_map, metadata):
             others_metadata = data[1:]
             all_metadata.insert(other_parties_id, others_metadata)
 
-            all_metadata.append(settings_map["party"] + metadata)
-
             all_metadata = "@seperate".join(all_metadata)
 
         for i in range(parties - 1):
             server.run(settings_map, all_metadata)
+
+        all_metadata = join(all_metadata).split("@seperate")
 
     else:
         client.run(settings_map, metadata)
