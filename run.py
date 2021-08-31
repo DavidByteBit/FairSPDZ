@@ -44,17 +44,21 @@ def compile_spdz(settings_map, all_metadata):
 
             # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
             # subprocess.check_call("rm ../spdz/Compiler/models.py")
-            subprocess.check_call("cp run.mpc ../spdz/Programs/Source/run.mpc")
-            subprocess.check_call("cp models/models.py ../spdz/Compiler/models.py")
+            subprocess.check_call("cp run.mpc {a}/Programs/Source/run.mpc".
+                                  format(a=settings_map["path_to_top_of_mpspdz"]))
+            subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
+                                  format(a=settings_map["path_to_top_of_mpspdz"]))
             subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
                                                                                     c=model_owner_id, d=model_type,
                                                                                     e=all_metadata))
     else:
 
-        subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-        subprocess.check_call("../spdz/Compiler/models.py")
-        subprocess.check_call("cp run.mpc ../spdz/Programs/Source/run.mpc")
-        subprocess.check_call("cp models/models.py ../spdz/Compiler/models.py")
+        # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+        # subprocess.check_call("../spdz/Compiler/models.py")
+        subprocess.check_call("cp run.mpc {a}/Programs/Source/run.mpc".
+                              format(a=settings_map["path_to_top_of_mpspdz"]))
+        subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
+                              format(a=settings_map["path_to_top_of_mpspdz"]))
         subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
                                                                                 c=model_owner_id, d=model_type,
                                                                                 e=all_metadata))
