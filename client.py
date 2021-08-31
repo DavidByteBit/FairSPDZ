@@ -12,7 +12,7 @@ def run(settings_map, metadata=None):
 def _client_send(settings_map, metadata):
 
     host_ip = settings_map['model_holders_ip']
-    host_port = settings_map['model_holders_port']
+    host_port = int(settings_map['model_holders_port'])
 
     party_id = settings_map["party"]
 
