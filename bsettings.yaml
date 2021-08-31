@@ -2,7 +2,7 @@
  path_to_public_data: "/home/david/Desktop/fspdz/data"
  type_of_data: "audit"
  model_holders_ip: "127.0.0.1"
- model_holders_port: "5004"
+ model_holders_port: "5005"
  path_to_private_data: "/home/david/Desktop/spdz/Player-Data/Input-P1-0"
  path_to_this_repo: "/home/david/Desktop/fspdz"
  path_to_top_of_mpspdz: "/home/david/Desktop/spdz"
