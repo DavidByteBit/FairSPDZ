@@ -40,12 +40,13 @@ def compile_spdz(settings_map, all_metadata):
     for i in range(len(all_metadata)):
         data = all_metadata[i]
         if "@model" in data:
-            model_owner_id = str(i)
+            model_owner_id = i
             break
     model_data_metadata = all_metadata[model_owner_id].replace("@model", '')
-    del all_metadata[int(model_owner_id)]
+    del all_metadata[model_owner_id]
     audit_data_metadata = all_metadata
 
+    model_owner_id = str(model_owner_id)
     subprocess.check_call([settings_map['path_to_this_repo'] + "/bash_scripts/compile.sh", c, num_of_parties,
                            model_owner_id, model_type, audit_data_metadata, model_data_metadata])
 
