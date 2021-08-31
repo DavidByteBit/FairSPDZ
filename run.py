@@ -38,7 +38,7 @@ def distribute_Data(settings_map, metadata):
     parties = int(settings_map["num_of_parties"])
     party_id = int(settings_map["party"])
 
-    all_metadata = [''] * parties
+    all_metadata = []
 
     # asynchronous execution to distribute data
     if is_model_owner:
