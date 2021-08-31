@@ -46,10 +46,12 @@ def compile_spdz(settings_map, all_metadata):
     del all_metadata[model_owner_id]
     audit_data_metadata = all_metadata
     online = settings_map["online"]
+    personal_id = settings_map["party"]
 
     model_owner_id = str(model_owner_id)
     subprocess.check_call([settings_map['path_to_this_repo'] + "/bashScripts/compile.sh", c, num_of_parties,
-                           model_owner_id, model_type, str(audit_data_metadata), str(model_data_metadata), online])
+                           model_owner_id, model_type, str(audit_data_metadata), str(model_data_metadata), online,
+                           personal_id])
 
 
 def distribute_Data(settings_map, metadata):
