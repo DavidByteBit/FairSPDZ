@@ -25,8 +25,9 @@ def _setup_server_send(settings_map, metadata):
         s.listen(1)  # We only want to connect with one person
         conn, addr = s.accept()
         with conn:
+            _ = conn.recv(1024)
             print('Connected by', addr)
-            conn.sendall(str(party_id) + metadata)
+            conn.sendall(metadata)
 
 
 def _setup_server_rec(settings_map):

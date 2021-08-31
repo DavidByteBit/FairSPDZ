@@ -37,9 +37,9 @@ def distribute_Data(settings_map, metadata):
     is_model_owner = bool(settings_map["type_of_data"] == "model")
     parties = int(settings_map["num_of_parties"])
 
-    all_metadata = [None] * (parties - 1)
+    all_metadata = [''] * (parties - 1)
 
-    # This block should give the model owner everyone else's data
+    # asynchronous execution to distribute data
     if is_model_owner:
         print("setting up server")
         for i in range(parties - 1):
@@ -47,8 +47,22 @@ def distribute_Data(settings_map, metadata):
             other_parties_id = int(data[0])
             others_metadata = data[1:]
             all_metadata[other_parties_id - 1] = others_metadata
+
+            all_metadata.append(settings_map["party"] + metadata)
+
+            all_metadata = "@seperate".join(all_metadata)
+
+        for i in range(parties - 1):
+            server.run(settings_map, all_metadata)
+
     else:
         client.run(settings_map, metadata)
+        all_metadata = client.run(settings_map).split("@seperate")
+
+    print(all_metadata)
+
+
+
 
 
 
