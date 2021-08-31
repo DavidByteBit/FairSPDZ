@@ -12,9 +12,9 @@ program.options_from_args()
 try:
     num_of_parties= int(program.args[1])
     model_owner_id= int(program.args[2])
-    model_type = program.args[4]
-    audit_data_metadata = program.args[5]
-    model_data_metadata = program.args[6]
+    model_type = program.args[3]
+    audit_data_metadata = program.args[4]
+    model_data_metadata = program.args[5]
 except:
     print("WARNING - Could not read args correctly")
     raise Exception
