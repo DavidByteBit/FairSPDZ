@@ -22,6 +22,7 @@ def run():
 
     print("processing data and retrieving its metadata")
     metadata = getMetaData(settings_map)
+    print(metadata)
 
     print("distributing data")
     distribute_Data(settings_map, metadata)
