@@ -12,5 +12,5 @@
  num_of_parties: "2"
  party: "0"
  compiler: "-R 64 -Y run"
- VM: "semi2k.x -N 2 -p 0 run"
+ VM: "semi2k-party.x -N 2 -p 0 run"
  online: "false"
