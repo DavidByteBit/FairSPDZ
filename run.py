@@ -35,12 +35,16 @@ def run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
+    args_index = settings_map["compiler"].index(" ")
+    args = settings_map["compiler"][args_index + 1:]
+
+    runner += args
+
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
     print(run_cmd)
 
-    subprocess.check_call(run_cmd,
-                          shell=True)
+    subprocess.check_call(run_cmd, shell=True)
 
 
 def compile_spdz(settings_map, all_metadata):
