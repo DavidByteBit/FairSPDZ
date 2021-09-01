@@ -35,9 +35,14 @@ def run_mpSPDZ(settings_map, compiler_args):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    compiler_args = compiler_args.replace(" ", "-")
+    compiler_args_split_index = compiler_args.index("[")
 
-    runner += "-" + compiler_args
+    compiler_argsA = compiler_args[:compiler_args_split_index]
+    compiler_argsB = compiler_argsA[compiler_args_split_index:]
+
+    compiler_args = "-" + compiler_argsA.replace(" ", "-") + "-" + compiler_argsB
+
+    runner += compiler_args
 
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
