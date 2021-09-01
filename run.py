@@ -26,19 +26,18 @@ def run():
     print("distributing data")
     all_metadata = distribute_Data(settings_map, metadata)
 
-    compile_spdz(settings_map, all_metadata)
+    compiler_args = compile_spdz(settings_map, all_metadata)
 
-    run_mpSPDZ(settings_map)
+    run_mpSPDZ(settings_map, compiler_args)
 
 
-def run_mpSPDZ(settings_map):
+def run_mpSPDZ(settings_map, compiler_args):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    args_index = settings_map["compiler"].index(" ")
-    args = settings_map["compiler"][args_index + 1:]
+    compiler_args = compiler_args.replace(" ", "-")
 
-    runner += args
+    runner += compiler_args
 
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
@@ -55,6 +54,8 @@ def compile_spdz(settings_map, all_metadata):
     online = settings_map["online"]
     model_owner_id = 0  # TODO: Make dynamic
 
+    compiler_args = "{a} {b} {c} {d}".format(a=num_of_parties, b=model_owner_id, c=model_type, d=all_metadata)
+
     if online.lower() == "false":
         if settings_map["type_of_data"] == "model":
 
@@ -64,9 +65,7 @@ def compile_spdz(settings_map, all_metadata):
                                   format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
             subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
                                   format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
-            subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
-                                                                                    c=model_owner_id, d=model_type,
-                                                                                    e=all_metadata), shell=True)
+            subprocess.check_call("./../spdz/compile.py {a} {b}".format(a=c, b=compiler_args), shell=True)
     else:
 
         # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
@@ -75,9 +74,9 @@ def compile_spdz(settings_map, all_metadata):
                               format(a=settings_map["path_to_top_of_mpspdz"]))
         subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
                               format(a=settings_map["path_to_top_of_mpspdz"]))
-        subprocess.check_call("./../spdz/compile.py {a} {b} {c} {d} {e}".format(a=c, b=num_of_parties,
-                                                                                c=model_owner_id, d=model_type,
-                                                                                e=all_metadata))
+        subprocess.check_call("./../spdz/compile.py {a} {b}".format(a=c, b=compiler_args), shell=True)
+
+    return compiler_args
 
 
 def distribute_Data(settings_map, metadata):
