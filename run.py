@@ -37,7 +37,7 @@ def run_mpSPDZ(settings_map, compiler_args):
 
     compiler_args = compiler_args.replace(" ", "-")
 
-    runner += compiler_args
+    runner += "-" + compiler_args
 
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
