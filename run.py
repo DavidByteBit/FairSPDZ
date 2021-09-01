@@ -38,7 +38,7 @@ def run_mpSPDZ(settings_map, compiler_args):
     compiler_args_split_index = compiler_args.index("[")
 
     compiler_argsA = compiler_args[:compiler_args_split_index]
-    compiler_argsB = compiler_argsA[compiler_args_split_index:]
+    compiler_argsB = compiler_args[compiler_args_split_index:]
 
     compiler_args = "-" + compiler_argsA.replace(" ", "-") + "-" + compiler_argsB
 
