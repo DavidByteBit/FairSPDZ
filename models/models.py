@@ -86,6 +86,14 @@ class logistic_regression(model):
         for i in range(parties - 1):
             self.data.assign(self.load_data(cols, each_parties_rows[i][0], each_parties_rows[i][1]))
 
+        self.data_transpose = sfix.Matrix(cols, total_amount_of_rows)
+
+        @for_range(total_amount_of_rows)
+        def _(i):
+            @for_range(cols)
+            def _(j):
+                self.data_transpose[j][i] = self.data[i][j]
+
         self.labels = sfix.Array(total_amount_of_rows)
 
         for i in range(parties - 1):
@@ -155,6 +163,9 @@ class logistic_regression(model):
 
     def get_true_labels(self):
         return self.labels
+
+    def get_col(self, col):
+        return self.data_transpose[col]
 
 class CNN(model):
     pass

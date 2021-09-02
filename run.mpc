@@ -6,6 +6,7 @@ from Compiler import mpc_math
 from Compiler import ml
 from Compiler import models
 from Compiler import fairness_metrics
+
 # from Compiler.library import public_input()
 
 # program.options_from_args()
@@ -34,10 +35,8 @@ if model_type == "lr":
     ground_truth = lr.get_true_labels()
     print_ln("%s", classifications.reveal())
 
-    male, female = fairness_metrics.metric(ground_truth, classifications, settings_map["protected_col"],
-                                    settings_map["protected_col_vals"]).traditional_metrics()
+    male, female = fairness_metrics.metric(ground_truth, classifications, lr.get_col(settings_map["protected_col"]),
+                                           settings_map["protected_col_vals"]).traditional_metrics()
 
     print_ln("%s", male.reveal())
     print_ln("%s", female.reveal())
-
-
