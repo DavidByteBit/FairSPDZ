@@ -86,6 +86,7 @@ class logistic_regression(model):
         self.data = sfix.Matrix(total_amount_of_rows, cols)
 
         for i in list(range(model_owner_id)) + list(range(model_owner_id + 1, parties)):
+            print(each_parties_rows)
             self.data.assign(self.load_data(cols, each_parties_rows[i][0], each_parties_rows[i][1]))
 
         # Example of how to make a field variable
