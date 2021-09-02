@@ -63,7 +63,7 @@ class logistic_regression(model):
         """Constructor."""
 
         super().__init__(all_metadata, model_owner_id)
-        param_size = int(self.all_metadata[model_owner_id].replace('[', '').replace(']', ''))
+        param_size = int(self.all_metadata[model_owner_id][0])
         self.model = self.load_model(param_size, model_owner_id)
 
         self.b = self.model[0]
