@@ -158,7 +158,7 @@ def distribute_Data(settings_map, metadata):
     # asynchronous execution to distribute data
     if is_model_owner:
 
-        all_metadata.insert(party_id, metadata + "@model")
+        all_metadata.insert(party_id, metadata)
 
         print("setting up server")
         for i in range(parties - 1):
