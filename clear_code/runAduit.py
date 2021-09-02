@@ -10,11 +10,11 @@ from os import path
 from FairSPDZ.clear_code.processModelData import processModel
 
 
-def run():
+def run(setting_map_path):
     # Path to settings file
 
     print("parsing settings")
-    settings_map = _parse_settings()
+    settings_map = _parse_settings(setting_map_path)
 
     print("validating settings")
     #validate_settings(settings_map)
@@ -279,10 +279,10 @@ def __write_data(settings_map):
     return [str(rows), str(cols)]
 
 
-def _parse_settings():
+def _parse_settings(setting_map_path):
     settings_map = None
 
-    with open(sys.argv[1], 'r') as stream:
+    with open(setting_map_path, 'r') as stream:
         try:
             settings_map = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
