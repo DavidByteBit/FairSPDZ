@@ -95,7 +95,7 @@ class logistic_regression(model):
             def _(j):
                 self.data_transpose[j][i] = self.data[i][j]
 
-        self.labels = sfix.Array(total_amount_of_rows)
+        self.labels = sint.Array(total_amount_of_rows)
 
         for i in range(parties - 1):
             self.labels.assign(self.load_labels(each_parties_rows[i][0], each_parties_rows[i][1]))
@@ -129,11 +129,11 @@ class logistic_regression(model):
 
 
     def load_labels(self, row_length, party_id):
-        labels = Array(row_length, sfix)
+        labels = Array(row_length, sint)
 
         @for_range_opt(row_length)
         def _(i):
-            labels[i] = sfix.get_input_from(party_id)
+            labels[i] = sint.get_input_from(party_id)
 
         return labels
 
