@@ -25,8 +25,8 @@ model_type = settings_map['model_type']
 
 if model_type == "lr":
     all_metadata = settings_map['all_metadata']
-    model_owner_id = settings_map['model_owner_id']
-    num_of_parties = settings_map['num_of_parties']
+    model_owner_id = int(settings_map['model_owner_id'])
+    num_of_parties = int(settings_map['num_of_parties'])
 
     lr = models.logistic_regression(all_metadata, model_owner_id)
     classifications = lr.classify()
