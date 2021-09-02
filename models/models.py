@@ -15,6 +15,9 @@ class model():
 
     def __init__(self, all_metadata, model_owner_id):
         self.all_metadata = json.loads(all_metadata)
+
+        print("metadata: %s - has type %s", all_metadata, type(all_metadata))
+
         self.model_owner_id = model_owner_id
 
 
