@@ -178,6 +178,7 @@ def distribute_Data(settings_map, metadata):
         client.run(settings_map, metadata)
         all_metadata = client.run(settings_map).split("@seperate")
 
+    all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
 
     print(all_metadata)
