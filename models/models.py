@@ -123,13 +123,17 @@ class logistic_regression(model):
 
         sample_size = self.sample_size
         data = self.data
+        global b
+        b = self.b
+        W = self.W
 
         classifications = sfix.Array(sample_size)
 
         @for_range(sample_size)
         def _(i):
+            global b
             row = data[i]
-            classification_intermediate = dp(self.W, row) + self.b
+            classification_intermediate = dp(W, row) + b
             classification = sig(classification_intermediate)
             classifications[i] = classification
 
