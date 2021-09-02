@@ -90,7 +90,7 @@ class logistic_regression(model):
             self.data.assign(self.load_data(cols, each_parties_rows[i][0], each_parties_rows[i][1]))
 
         # Example of how to make a field variable
-        self.sample_size = self.data.len()
+        self.sample_size = self.data.length
 
 
     def load_model(self, param_size, model_owner_id):
