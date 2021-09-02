@@ -116,6 +116,9 @@ def compile_spdz(settings_map):
     subprocess.check_call("cp {a}/models/models.py {b}/Compiler/models.py".
                           format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
                           shell=True)
+    subprocess.check_call("cp {a}/metrics/fairness_metrics.py {b}/Compiler/fairness_metrics.py".
+                          format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                          shell=True)
     subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
 
 
