@@ -41,7 +41,7 @@ def run():
 
 
 # TODO: This currently only works for LR. Need to make general
-def edit_source_code(settings_map, all_metadata):
+def _edit_source_code(settings_map, all_metadata):
 
     mpc_file_path = settings_map["path_to_this_repo"] + "/run.mpc"
 
@@ -67,14 +67,11 @@ def edit_source_code(settings_map, all_metadata):
 
             file.append(line)
 
-    compile_args = "\'num_of_parties\': \'{a}\', \'model_type\': \'{b}\', \'model_owner_id\': \'{c}\', " \
-                   "\'all_metadata\': \'{d}\', \'protected_col\': \'{e}\', \'protected_col_vals\': \'{f}\' ".\
-        format(a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata, e=protected_col, f=protected_col_vals
-    )
+    compile_args = __format_args(num_of_parties=num_of_parties, model_type=model_type, model_owner_id=model_owner_id,
+                                 all_metadata=all_metadata, protected_col=protected_col,
+                                 protected_col_vals=protected_col_vals)
 
-    compile_args_as_dict = "{" + compile_args + "}"
-
-    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args_as_dict)
+    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
 
     # file as a string
     file = ''.join([s for s in file])
@@ -85,18 +82,20 @@ def edit_source_code(settings_map, all_metadata):
         stream.write(file)
 
 
-def run_mpSPDZ(settings_map):
+def __format_args(**kwargs):
+    res = "{"
+    for key in kwargs[1:]:
+        res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
+
+    # Omit last comma
+    res = res[:-1] + "}"
+
+    return res
+
+
+def _run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
-
-    # compiler_args_split_index = compiler_args.index("[")
-    #
-    # compiler_argsA = compiler_args[:compiler_args_split_index]
-    # compiler_argsB = compiler_args[compiler_args_split_index:]
-
-    # compiler_args = "-" + compiler_argsA.replace(" ", "-") + compiler_argsB
-
-    # runner += compiler_args
 
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
@@ -105,7 +104,7 @@ def run_mpSPDZ(settings_map):
     subprocess.check_call(run_cmd, shell=True)
 
 
-def compile_spdz(settings_map):
+def _compile_spdz(settings_map):
     # Compile .mpc program
     c = settings_map["compiler"]
     online = settings_map["online"]
@@ -122,7 +121,7 @@ def compile_spdz(settings_map):
     subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
 
 
-def compile_spdz_dep(settings_map, all_metadata):
+def _compile_spdz_dep(settings_map, all_metadata):
     # Compile .mpc program
     c = settings_map["compiler"]
     num_of_parties = str(settings_map["num_of_parties"])
@@ -156,7 +155,7 @@ def compile_spdz_dep(settings_map, all_metadata):
     return compiler_args
 
 
-def distribute_Data(settings_map, metadata):
+def _distribute_Data(settings_map, metadata):
     is_model_owner = bool(settings_map["type_of_data"] == "model")
     parties = int(settings_map["num_of_parties"])
     party_id = int(settings_map["party"])
@@ -194,7 +193,7 @@ def distribute_Data(settings_map, metadata):
     return all_metadata
 
 
-def getMetaData(settings_map):
+def _getMetaData(settings_map):
     own_model = bool(settings_map["type_of_data"] == "model")
 
     metadata = None
@@ -202,12 +201,12 @@ def getMetaData(settings_map):
     if own_model:
         metadata = processModel.logistic_regression(settings_map)
     else:
-        metadata = write_data(settings_map)
+        metadata = __write_data(settings_map)
 
     return str(metadata)
 
 
-def write_data(settings_map):
+def __write_data(settings_map):
     public_data_path = settings_map["path_to_public_data"]
     feature_path = public_data_path + "/x.csv"
     label_path = public_data_path + "/y.csv"
@@ -250,11 +249,7 @@ def write_data(settings_map):
     return [str(rows), str(cols)]
 
 
-def write_model(settings_map):
-    pass
-
-
-def parse_settings():
+def _parse_settings():
     settings_map = None
 
     with open(sys.argv[1], 'r') as stream:
@@ -263,10 +258,12 @@ def parse_settings():
         except yaml.YAMLError as exc:
             print(exc)
 
+    __validate_settings(settings_map)
+
     return settings_map
 
 
-def validate_settings(settings_map):
+def __validate_settings(settings_map):
     error_found = False
 
     # Validate paths

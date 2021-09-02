@@ -148,7 +148,7 @@ class logistic_regression(model):
         b = self.b
         W = self.W
 
-        classifications = sfix.Array(sample_size)
+        classifications = sint.Array(sample_size)
 
         threshold = 0.5  # TODO: Should be dynamic in practice
 
