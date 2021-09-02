@@ -105,26 +105,13 @@ def compile_spdz(settings_map):
     c = settings_map["compiler"]
     online = settings_map["online"]
 
-    if online.lower() == "false":
-        if settings_map["type_of_data"] == "model":
-            # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-            # subprocess.check_call("rm ../spdz/Compiler/models.py")
-            subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                                  shell=True)
-            subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                                  shell=True)
-            subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
-    else:
-
-        # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-        # subprocess.check_call("../spdz/Compiler/models.py")
-        subprocess.check_call("cp run.mpc {a}/Programs/Source/run.mpc".
-                              format(a=settings_map["path_to_top_of_mpspdz"]))
-        subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
-                              format(a=settings_map["path_to_top_of_mpspdz"]))
-        subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
+    subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
+                          format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                          shell=True)
+    subprocess.check_call("cp {a}/models/models.py {b}/Compiler/models.py".
+                          format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                          shell=True)
+    subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
 
 
 def compile_spdz_dep(settings_map, all_metadata):
