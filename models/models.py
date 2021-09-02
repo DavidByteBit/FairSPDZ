@@ -66,9 +66,9 @@ class logistic_regression(model):
         param_size = int(self.all_metadata[model_owner_id][0])
         self.model = self.load_model(param_size, model_owner_id)
 
-        self.b = self.model[0]
+        self.b = self.model[1]
         # TODO: Test to make sure the Array is correctly initialized
-        self.W = self.model[1:]
+        self.W = self.model[0]
 
         parties = len(self.all_metadata)
 
