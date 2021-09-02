@@ -17,7 +17,7 @@ def run():
     settings_map = parse_settings()
 
     print("validating settings")
-    validate_settings(settings_map)
+    #validate_settings(settings_map)
 
     print("processing data and retrieving its metadata")
     metadata = getMetaData(settings_map)
