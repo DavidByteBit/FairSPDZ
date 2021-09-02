@@ -65,8 +65,12 @@ class metric():
             z = 1 - x
             w = 1 - y
 
-            is_male = (protected_col[i] == int(protected_col_vals[0]))  # TODO: Should make this an int elsewhere
+            is_male = (protected_col[i] == protected_col_vals[0])
             is_female = 1 - is_male
+
+            print(type(b))
+            print(type(is_male))
+            print(type(z))
 
             male[0] += (z * w) * is_male
             male[1] += (z * b) * is_male
