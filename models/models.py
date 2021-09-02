@@ -6,7 +6,7 @@ from Compiler.types import *
 from Compiler.library import *
 
 import math
-
+import json
 
 e = math.e
 
@@ -14,7 +14,7 @@ e = math.e
 class model():
 
     def __init__(self, all_metadata, model_owner_id):
-        self.all_metadata = all_metadata
+        self.all_metadata = json.loads(all_metadata)
         self.model_owner_id = model_owner_id
 
 
