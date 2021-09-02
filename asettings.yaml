@@ -14,5 +14,5 @@
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 0 run"
  protected_col: "47"
- protected_values: "[0,1]"
+ protected_col_vals: "[0,1]"
  online: "false"
