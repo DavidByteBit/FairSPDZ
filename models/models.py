@@ -77,7 +77,7 @@ class logistic_regression(model):
         cols = param_size - 1
 
         for i in list(range(model_owner_id)) + list(range(model_owner_id + 1, parties)):
-            metadata = all_metadata[i]
+            metadata = self.all_metadata[i]
             print("metadata for party {a} - {b}".format(a=i, b=metadata))
             rows = int(metadata[0])
             total_amount_of_rows += rows
