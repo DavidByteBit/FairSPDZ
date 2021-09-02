@@ -23,6 +23,9 @@ settings_map = {}
 
 model_type = settings_map['model_type']
 
+if 5 == 5:
+    print_ln("hello")
+
 if model_type == "lr":
     all_metadata = settings_map['all_metadata']
     model_owner_id = settings_map['model_owner_id']
