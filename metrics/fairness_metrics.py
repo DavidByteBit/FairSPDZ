@@ -58,6 +58,8 @@ class metric():
             a = predicted_labels[i]
             b = actual_labels[i]
 
+            print(type(b))
+
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
