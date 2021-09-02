@@ -13,6 +13,6 @@
  party: "1"
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 1 run"
- protected_column: "47"
+ protected_col: "47"
  protected_values: "[0,1]"
  online: "false"
