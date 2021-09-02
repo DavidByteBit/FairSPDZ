@@ -23,19 +23,13 @@ settings_map = {}
 
 model_type = settings_map['model_type']
 
-if 5 == 5:
-    print_ln("hello")
-else:
-    print_ln("oh no")
+all_metadata = settings_map['all_metadata']
+model_owner_id = settings_map['model_owner_id']
+num_of_parties = settings_map['num_of_parties']
 
-if model_type == "lr":
-    all_metadata = settings_map['all_metadata']
-    model_owner_id = settings_map['model_owner_id']
-    num_of_parties = settings_map['num_of_parties']
-
-    lr = models.logistic_regression(all_metadata, model_owner_id)
-    classifications = lr.classify()
-    print_ln("%s", classifications.reveal())
+lr = models.logistic_regression(all_metadata, model_owner_id)
+classifications = lr.classify()
+print_ln("%s", classifications.reveal())
 
 
 def dot_product(a, b):  # The Array class has a dot product, should use that
