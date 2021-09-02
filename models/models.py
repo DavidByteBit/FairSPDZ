@@ -127,12 +127,14 @@ class logistic_regression(model):
 
         classifications = sfix.Array(sample_size)
 
+        threshold = 0.5  # TODO: Should be dynamic in practice
+
         @for_range(sample_size)
         def _(i):
             global b
             row = data[i]
             classification_intermediate = dp(W, row) + b
-            classification = sig(classification_intermediate)
+            classification = sig(classification_intermediate) > threshold
             classifications[i] = classification
 
         return classifications
