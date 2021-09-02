@@ -63,11 +63,13 @@ def edit_source_code(settings_map, all_metadata):
 
             file.append(line)
 
-    compile_args = "\{num_of_parties: {a}, model_type: {b}, model_owner_id: {c}, all_metadata: {d}\}".format(
+    compile_args = "num_of_parties: {a}, model_type: {b}, model_owner_id: {c}, all_metadata: {d}".format(
         a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata
     )
 
-    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
+    compile_args_as_dict = "{" + compile_args + "}"
+
+    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args_as_dict)
 
     # file as a string
     file = ''.join([s for s in file])
