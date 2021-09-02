@@ -113,45 +113,45 @@ def infer_data(model, data, param_size, row_length):
 # num_of_params = int(args[0])
 # row_length = int(args[1])
 
-model = load_model(num_of_params)
-
-data = load_data(num_of_params, row_length)
-
-predicted_labels = infer_data(model, data, num_of_params, row_length)
-
-actual_labels = get_labels(row_length)
-
-TP = sint(0)
-FP = sint(0)
-TN = sint(0)
-FN = sint(0)
-
-# Count correctly and incorrectly classified labels
-for i in range(row_length):
-    a = predicted_labels[i]
-    b = actual_labels[i]
-
-    x = (a == sint(1))
-    y = (b == sint(1))
-    z = sint(1) - x
-    w = sint(1) - y
-
-    TN += z * w
-    FP += z * b
-    FN += x * w
-    TP += x * y
-
-# Not working yet
-print_ln('TP for%s:%s', "Bob", TP.reveal())
-print_ln('FP for%s:%s', "Bob", FP.reveal())
-print_ln('FN for%s:%s', "Bob", FN.reveal())
-print_ln('TN for%s:%s', "Bob", TN.reveal())
-
-# Not working yet
-print_ln_to(BOB, 'TP for%s:%s', "Bob", TP.reveal_to(BOB))
-print_ln_to(BOB, 'FP for%s:%s', "Bob", FP.reveal_to(BOB))
-print_ln_to(BOB, 'FN for%s:%s', "Bob", FN.reveal_to(BOB))
-print_ln_to(BOB, 'TN for%s:%s', "Bob", TN.reveal_to(BOB))
+# model = load_model(num_of_params)
+#
+# data = load_data(num_of_params, row_length)
+#
+# predicted_labels = infer_data(model, data, num_of_params, row_length)
+#
+# actual_labels = get_labels(row_length)
+#
+# TP = sint(0)
+# FP = sint(0)
+# TN = sint(0)
+# FN = sint(0)
+#
+# # Count correctly and incorrectly classified labels
+# for i in range(row_length):
+#     a = predicted_labels[i]
+#     b = actual_labels[i]
+#
+#     x = (a == sint(1))
+#     y = (b == sint(1))
+#     z = sint(1) - x
+#     w = sint(1) - y
+#
+#     TN += z * w
+#     FP += z * b
+#     FN += x * w
+#     TP += x * y
+#
+# # Not working yet
+# print_ln('TP for%s:%s', "Bob", TP.reveal())
+# print_ln('FP for%s:%s', "Bob", FP.reveal())
+# print_ln('FN for%s:%s', "Bob", FN.reveal())
+# print_ln('TN for%s:%s', "Bob", TN.reveal())
+#
+# # Not working yet
+# print_ln_to(BOB, 'TP for%s:%s', "Bob", TP.reveal_to(BOB))
+# print_ln_to(BOB, 'FP for%s:%s', "Bob", FP.reveal_to(BOB))
+# print_ln_to(BOB, 'FN for%s:%s', "Bob", FN.reveal_to(BOB))
+# print_ln_to(BOB, 'TN for%s:%s', "Bob", TN.reveal_to(BOB))
 
 
 
