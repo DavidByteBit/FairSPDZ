@@ -16,28 +16,28 @@ def run():
     # Path to settings file
 
     print("parsing settings")
-    settings_map = parse_settings()
+    settings_map = _parse_settings()
 
     print("validating settings")
     #validate_settings(settings_map)
 
     print("processing data and retrieving its metadata")
-    metadata = getMetaData(settings_map)
+    metadata = _getMetaData(settings_map)
     print(metadata)
 
     print("distributing data")
-    all_metadata = distribute_Data(settings_map, metadata)
+    all_metadata = _distribute_Data(settings_map, metadata)
 
     if settings_map["online"].lower() == "false":
         if settings_map["type_of_data"] == "model":
-            edit_source_code(settings_map, all_metadata)
-            compile_spdz(settings_map)
+            _edit_source_code(settings_map, all_metadata)
+            _compile_spdz(settings_map)
     else:
-        edit_source_code(settings_map, all_metadata)
-        compile_spdz(settings_map)
+        _edit_source_code(settings_map, all_metadata)
+        _compile_spdz(settings_map)
 
 
-    run_mpSPDZ(settings_map)
+    _run_mpSPDZ(settings_map)
 
 
 # TODO: This currently only works for LR. Need to make general
