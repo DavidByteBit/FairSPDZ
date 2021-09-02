@@ -169,7 +169,7 @@ def distribute_Data(settings_map, metadata):
             others_metadata = data[1:]
             all_metadata.insert(other_parties_id, others_metadata)
 
-            all_metadata = "@seperate".join(all_metadata)
+        all_metadata = "@seperate".join(all_metadata)
 
         for i in range(parties - 1):
             server.run(settings_map, all_metadata)
