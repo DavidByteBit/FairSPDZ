@@ -49,6 +49,8 @@ def edit_source_code(settings_map, all_metadata):
     num_of_parties = str(settings_map["num_of_parties"])
     model_type = settings_map["model_type"]
     model_owner_id = 0  # TODO: Make dynamic
+    protected_col = settings_map["protected_col"]
+    protected_col_vals = settings_map["protected_col_vals"]
 
     file = []
     found_delim = False
@@ -66,7 +68,8 @@ def edit_source_code(settings_map, all_metadata):
             file.append(line)
 
     compile_args = "\'num_of_parties\': \'{a}\', \'model_type\': \'{b}\', \'model_owner_id\': \'{c}\', " \
-                   "\'all_metadata\': \'{d}\'".format(a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata
+                   "\'all_metadata\': \'{d}\', \'protected_col\': \'{e}\', \'protected_col_vals\': \'{f}\' ".\
+        format(a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata, e=protected_col, f=protected_col_vals
     )
 
     compile_args_as_dict = "{" + compile_args + "}"

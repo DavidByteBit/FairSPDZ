@@ -3,10 +3,13 @@ class metric():
     :param actual_labels: Actual labels of the data
     :param predicted_labels: Predicted labels of the data
     """
-    def __init__(self, actual_labels, predicted_labels, debug=False, report_loss=None):
+
+    def __init__(self, actual_labels, predicted_labels, protected_col, protected_col_vals,
+                 debug=False, report_loss=None):
         self.actual_labels = actual_labels
         self.predicted_labels = predicted_labels
-
+        self.protected_col = protected_col
+        self.protected_col_vals = protected_col_vals
 
     def traditional_metrics(self):
         """ Calculates some of the most common metrics:
@@ -25,17 +28,26 @@ class metric():
             TODO: Make sure I can actually return a tuple, or tuple like answer in MP-SPDZ
             returns (TP, FP, TN, FN) """
 
-        actual_labels  = self.actual_labels
+        protected_col = self.protected_col
+        protected_col_vals = self.protected_col_vals
+
+        actual_labels = self.actual_labels
         predicted_labels = self.predicted_labels
 
         l = len(actual_labels)
 
-        assert(l == len(predicted_labels))
+        assert (l == len(predicted_labels))
+        assert (l == len(protected_col))
 
-        TP = sint(0)
-        FP = sint(0)
-        TN = sint(0)
-        FN = sint(0)
+        # TODO: Needs to be more general actually... need to have as many arrays as there are attribute values
+        # TP, FP, TN, FN
+        male = sint.Array(4)
+        female = sint.Array(4)
+
+        @for_range(4)
+        def _(i):
+            male[i] = sint(0)
+            female[i] = sint(0)
 
         @for_range_opt(l)
         def _(i):
@@ -47,9 +59,17 @@ class metric():
             z = 1 - x
             w = 1 - y
 
-            TN += z * w
-            FP += z * b
-            FN += x * w
-            TP += x * y
+            is_male = (protected_col[i] == protected_col_vals[0])
+            is_female = 1 - is_male
 
-        return TP, FP, TN, FN
+            male[0] += (z * w) * is_male
+            male[1] += (z * b) * is_male
+            male[2] += (x * w) * is_male
+            male[3] += (x * y) * is_male
+
+            female[0] += (z * w) * is_female
+            female[1] += (z * b) * is_female
+            female[2] += (x * w) * is_female
+            female[3] += (x * y) * is_female
+
+        return male, female

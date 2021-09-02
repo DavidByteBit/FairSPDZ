@@ -84,8 +84,12 @@ class logistic_regression(model):
         self.data = sfix.Matrix(total_amount_of_rows, cols)
 
         for i in range(parties - 1):
-            print(each_parties_rows)
             self.data.assign(self.load_data(cols, each_parties_rows[i][0], each_parties_rows[i][1]))
+
+        self.labels = sfix.Array(total_amount_of_rows)
+
+        for i in range(parties - 1):
+            self.labels.assign(self.load_labels(each_parties_rows[i][0], each_parties_rows[i][1]))
 
         # Example of how to make a field variable
         self.sample_size = total_amount_of_rows
@@ -115,6 +119,16 @@ class logistic_regression(model):
         return data
 
 
+    def load_labels(self, row_length, party_id):
+        labels = Array(row_length, sfix)
+
+        @for_range_opt(row_length)
+        def _(i):
+            labels[i] = sfix.get_input_from(party_id)
+
+        return labels
+
+
     def classify(self):
         """method takes a 2D list of data and classifies each row as a positive (1) or negative (0) example.
             :return a list containing the classification of each sample of data"""
@@ -139,6 +153,8 @@ class logistic_regression(model):
 
         return classifications
 
+    def get_true_labels(self):
+        return self.labels
 
 class CNN(model):
     pass
