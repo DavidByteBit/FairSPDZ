@@ -9,6 +9,8 @@ from os import path
 
 from processModelData import processModel
 
+import time
+
 
 def run():
     # Path to settings file
@@ -176,6 +178,7 @@ def distribute_Data(settings_map, metadata):
 
     else:
         client.run(settings_map, metadata)
+        time.sleep(2.4)
         all_metadata = client.run(settings_map).split("@seperate")
 
     all_metadata = str(all_metadata)
