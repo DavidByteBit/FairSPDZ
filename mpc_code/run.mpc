@@ -28,7 +28,7 @@ settings_map = {}
 model_type = settings_map['model_type']
 
 if model_type == "lr":
-    all_metadata = settings_map['all_metadata']
+    all_metadata = json.loads(settings_map['all_metadata'])
     model_owner_id = int(settings_map['model_owner_id'])
     num_of_parties = int(settings_map['num_of_parties'])
     protected_col = int(settings_map["protected_col"])

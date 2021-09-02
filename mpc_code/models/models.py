@@ -14,11 +14,7 @@ e = math.e
 class model():
 
     def __init__(self, all_metadata, model_owner_id):
-        # TODO: Maybe it should not be this classses job to parse this? Maybe we need a buffer class
-        self.all_metadata = json.loads(all_metadata)
-
-        print("metadata: {a} - has type {b}".format(a=self.all_metadata, b=type(self.all_metadata)))
-
+        self.all_metadata = all_metadata
         self.model_owner_id = model_owner_id
 
 

@@ -1,15 +1,13 @@
 import yaml
 import subprocess
 import sys
+import os
 
-import server
-import client
+from FairSPDZ.clear_code.networking import client, server
 
 from os import path
 
-from processModelData import processModel
-
-import time
+from FairSPDZ.clear_code.processModelData import processModel
 
 
 def run():
@@ -48,7 +46,7 @@ def _edit_source_code(settings_map, all_metadata):
     # 'command line arguments' for our .mpc file
     num_of_parties = str(settings_map["num_of_parties"])
     model_type = settings_map["model_type"]
-    model_owner_id = 0  # TODO: Make dynamic
+    model_owner_id = settings_map["party_id_of_model_holder"]
     protected_col = settings_map["protected_col"]
     protected_col_vals = settings_map["protected_col_vals"]
 
@@ -112,13 +110,46 @@ def _compile_spdz(settings_map):
     subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
                           format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
                           shell=True)
-    subprocess.check_call("cp {a}/models/models.py {b}/Compiler/models.py".
-                          format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                          shell=True)
-    subprocess.check_call("cp {a}/metrics/fairness_metrics.py {b}/Compiler/fairness_metrics.py".
-                          format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                          shell=True)
+
+    # Take the directory tree in the "mpc_code" folder, flatten out the files,
+    # and direct it to the Compiler directory in the spdz directory (skips run.mpc)
+    __populate_spdz_files(settings_map)
+
     subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
+
+
+def __populate_spdz_files(settings_map):
+
+    def getListOfFiles(dirName):
+        # create a list of file and sub directories
+        # names in the given directory
+        listOfFile = os.listdir(dirName)
+        allFiles = list()
+        # Iterate over all the entries
+        for entry in listOfFile:
+            # Create full path
+            fullPath = os.path.join(dirName, entry)
+
+            # run.mpc should not go to the Compiler directory
+            if "run.mpc" in fullPath:
+                continue
+
+            # If entry is a directory then get the list of files in this directory
+            if os.path.isdir(fullPath):
+                allFiles = allFiles + getListOfFiles(fullPath)
+            else:
+                allFiles.append((fullPath, entry))
+
+        return allFiles
+
+    dir = settings_map["path_to_this_repo"] + "/mpc_code"
+
+    allFiles = getListOfFiles(dir)
+
+    for path_data in allFiles:
+        subprocess.check_call("cp {a} {b}/Compiler/{c}".
+                              format(a=path_data[0], b=settings_map["path_to_top_of_mpspdz"], c=path_data[1]),
+                              shell=True)
 
 
 def _compile_spdz_dep(settings_map, all_metadata):
@@ -127,7 +158,7 @@ def _compile_spdz_dep(settings_map, all_metadata):
     num_of_parties = str(settings_map["num_of_parties"])
     model_type = settings_map["model_type"]
     online = settings_map["online"]
-    model_owner_id = 0  # TODO: Make dynamic
+    model_owner_id = 0
 
     compiler_args = "{a} {b} {c} {d}".format(a=num_of_parties, b=model_owner_id, c=model_type, d=all_metadata)
 
@@ -183,7 +214,6 @@ def _distribute_Data(settings_map, metadata):
 
     else:
         client.run(settings_map, metadata)
-        time.sleep(2.4)
         all_metadata = client.run(settings_map).split("@seperate")
 
     all_metadata = str(all_metadata)
@@ -194,7 +224,7 @@ def _distribute_Data(settings_map, metadata):
 
 
 def _getMetaData(settings_map):
-    own_model = bool(settings_map["type_of_data"] == "model")
+    own_model = bool(settings_map["party_id_of_model_holder"] == settings_map["party"])
 
     metadata = None
 
@@ -258,11 +288,12 @@ def _parse_settings():
         except yaml.YAMLError as exc:
             print(exc)
 
-    __validate_settings(settings_map)
+    # __validate_settings(settings_map)
 
     return settings_map
 
 
+# TODO: This is no longer relevant, needs to be updated
 def __validate_settings(settings_map):
     error_found = False
 
