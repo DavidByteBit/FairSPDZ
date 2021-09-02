@@ -16,7 +16,7 @@ class model():
     def __init__(self, all_metadata, model_owner_id):
         self.all_metadata = json.loads(all_metadata)
 
-        print("metadata: %s - has type %s", all_metadata, type(all_metadata))
+        print("metadata: {a} - has type {b}".format(a=self.all_metadata, b=type(self.all_metadata)))
 
         self.model_owner_id = model_owner_id
 
@@ -63,14 +63,14 @@ class logistic_regression(model):
         """Constructor."""
 
         super().__init__(all_metadata, model_owner_id)
-        param_size = int(all_metadata[model_owner_id].replace('[', '').replace(']', ''))
+        param_size = int(self.all_metadata[model_owner_id].replace('[', '').replace(']', ''))
         self.model = self.load_model(param_size, model_owner_id)
 
         self.b = self.model[0]
         # TODO: Test to make sure the Array is correctly initialized
         self.W = self.model[1:]
 
-        parties = len(all_metadata)
+        parties = len(self.all_metadata)
 
         each_parties_rows = []
         total_amount_of_rows = 0
