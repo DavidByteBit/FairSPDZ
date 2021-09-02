@@ -63,7 +63,7 @@ def edit_source_code(settings_map, all_metadata):
 
             file.append(line)
 
-    compile_args = "num_of_parties: {a}, model_type: {b}, model_owner_id: {c}, all_metadata: {d}".format(
+    compile_args = "\'num_of_parties\': {a}, \'model_type\': {b}, \'model_owner_id\': {c}, \'all_metadata\': {d}".format(
         a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata
     )
 
