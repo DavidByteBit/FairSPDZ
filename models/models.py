@@ -31,11 +31,9 @@ class model():
 
 
 def sig(x):
-    if x < -0.5:
-        return 0
-    if x > 0.5:
-        return 1
-    return x + 0.5
+    a = x < -0.5
+    b = x > 0.5
+    return a.if_else(0, b.if_else(1, 0.5 + x))
 
 
 def true_sig(x):
