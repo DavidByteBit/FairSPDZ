@@ -26,23 +26,70 @@ def run():
     print("distributing data")
     all_metadata = distribute_Data(settings_map, metadata)
 
-    compiler_args = compile_spdz(settings_map, all_metadata)
+    if settings_map["online"].lower() == "false":
+        if settings_map["type_of_data"] == "model":
+            edit_source_code(settings_map, all_metadata)
+            compile_spdz(settings_map)
+    else:
+        edit_source_code(settings_map, all_metadata)
+        compile_spdz(settings_map)
 
-    run_mpSPDZ(settings_map, compiler_args)
+
+    run_mpSPDZ(settings_map)
 
 
-def run_mpSPDZ(settings_map, compiler_args):
+# TODO: This currently only works for LR. Need to make general
+def edit_source_code(settings_map, all_metadata):
+
+    mpc_file_path = settings_map["path_to_this_repo"] + "/run.mpc"
+
+    # 'command line arguments' for our .mpc file
+    num_of_parties = str(settings_map["num_of_parties"])
+    model_type = settings_map["model_type"]
+    model_owner_id = 0  # TODO: Make dynamic
+
+    file = []
+    found_delim = False
+    start_of_delim = 0
+
+    i = 0
+    with open(mpc_file_path, 'r') as stream:
+        for line in stream:
+
+            if not found_delim and "@args" in line:
+                start_of_delim = i
+                found_delim = True
+            i += 1
+
+            file.append(line)
+
+    compile_args = "{num_of_parties: {a}, model_type: {b}, model_owner_id: {c}, all_metadata: {d}}".format(
+        a=num_of_parties, b=model_type, c=model_owner_id, d=all_metadata
+    )
+
+    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
+
+    # file as a string
+    file = ''.join([s for s in file])
+
+    # print(file)
+
+    with open(mpc_file_path, 'w') as stream:
+        stream.write(file)
+
+
+def run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    compiler_args_split_index = compiler_args.index("[")
+    # compiler_args_split_index = compiler_args.index("[")
+    #
+    # compiler_argsA = compiler_args[:compiler_args_split_index]
+    # compiler_argsB = compiler_args[compiler_args_split_index:]
 
-    compiler_argsA = compiler_args[:compiler_args_split_index]
-    compiler_argsB = compiler_args[compiler_args_split_index:]
+    # compiler_args = "-" + compiler_argsA.replace(" ", "-") + compiler_argsB
 
-    compiler_args = "-" + compiler_argsA.replace(" ", "-") + compiler_argsB
-
-    runner += compiler_args
+    # runner += compiler_args
 
     run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
@@ -51,7 +98,34 @@ def run_mpSPDZ(settings_map, compiler_args):
     subprocess.check_call(run_cmd, shell=True)
 
 
-def compile_spdz(settings_map, all_metadata):
+def compile_spdz(settings_map):
+    # Compile .mpc program
+    c = settings_map["compiler"]
+    online = settings_map["online"]
+
+    if online.lower() == "false":
+        if settings_map["type_of_data"] == "model":
+            # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+            # subprocess.check_call("rm ../spdz/Compiler/models.py")
+            subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                                  shell=True)
+            subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                                  shell=True)
+            subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
+    else:
+
+        # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
+        # subprocess.check_call("../spdz/Compiler/models.py")
+        subprocess.check_call("cp run.mpc {a}/Programs/Source/run.mpc".
+                              format(a=settings_map["path_to_top_of_mpspdz"]))
+        subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
+                              format(a=settings_map["path_to_top_of_mpspdz"]))
+        subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
+
+
+def compile_spdz_dep(settings_map, all_metadata):
     # Compile .mpc program
     c = settings_map["compiler"]
     num_of_parties = str(settings_map["num_of_parties"])
@@ -63,13 +137,14 @@ def compile_spdz(settings_map, all_metadata):
 
     if online.lower() == "false":
         if settings_map["type_of_data"] == "model":
-
             # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
             # subprocess.check_call("rm ../spdz/Compiler/models.py")
             subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                                  shell=True)
             subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]), shell=True)
+                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
+                                  shell=True)
             subprocess.check_call("./../spdz/compile.py {a} {b}".format(a=c, b=compiler_args), shell=True)
     else:
 
@@ -257,28 +332,8 @@ def validate_settings(settings_map):
     # TODO: verify if models and metrics are correct
 
     if error_found:
-        raise Exception("There was an error with the settings file. Please look above to determine what the error was "
-                        "\n")
+        raise Exception("\nThere was an error with the settings file. Please look above to determine what the error "
+                        "was\n")
 
-
-# For now, settings file will contain path to top of MP-SPDZ directory,
-# Alice (0) or Bob (1), others IP address, path to file (model or data) (Could be multiple)
-
-# if Alice
-## TCP to Bob, sending him model name, and metadata (as list)
-## Receive metadata regarding dataset from Bob
-
-# if Bob
-## TCP to Alice, sending metadata regarding the auditing dataset
-## Receive model name and metadata about model from Alice
-
-# Example
-# subprocess.run(["ls"])
 
 run()
-
-# Call editArgs. Pass in model names, model metadata, audit data metadata, and the path to the .mpc file
-
-# Recompile the .mpc file
-
-# Call bash script to run runAudit.mpc - pass in path
