@@ -165,7 +165,7 @@ class logistic_regression(model):
         return self.labels
 
     def get_col(self, col):
-        return self.data_transpose[col]
+        return self.data_transpose[int(col)]
 
 class CNN(model):
     pass
