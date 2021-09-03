@@ -1,9 +1,7 @@
 import sys
 
-# TODO: This is problematic, what if someone renames their directory from FairSPDZ to something else?
-# Need to ad inits to files
-from clear_code import runAduit
+import clear_code
 
 setting_file_path = sys.argv[1]
 
-runAduit.run(setting_file_path)
+clear_code.runAduit.run(setting_file_path)
