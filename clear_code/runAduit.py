@@ -3,11 +3,12 @@ import subprocess
 import sys
 import os
 
-from networking import client, server
+from .networking import client, server
+from .processModelData import processModel
 
 from os import path
 
-from processModelData import processModel
+
 
 
 def run(setting_map_path):
