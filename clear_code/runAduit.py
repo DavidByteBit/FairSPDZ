@@ -133,7 +133,7 @@ def __populate_spdz_files(settings_map):
             fullPath = os.path.join(dirName, entry)
 
             # run.mpc should not go to the Compiler directory
-            if "run.mpc" in fullPath:
+            if "run.mpc" in fullPath or "init" in fullPath:
                 continue
 
             # If entry is a directory then get the list of files in this directory
