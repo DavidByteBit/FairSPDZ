@@ -116,7 +116,8 @@ def _compile_spdz(settings_map):
     # and direct it to the Compiler directory in the spdz directory (skips run.mpc)
     __populate_spdz_files(settings_map)
 
-    subprocess.check_call("./../../spdz/compile.py {a}".format(a=c), shell=True)
+    # TODO: Should not be 'spdz' in general, needs to change
+    subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
 
 
 def __populate_spdz_files(settings_map):
