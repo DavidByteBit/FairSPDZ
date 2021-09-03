@@ -108,7 +108,7 @@ def _compile_spdz(settings_map):
     c = settings_map["compiler"]
     online = settings_map["online"]
 
-    subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
+    subprocess.check_call("cp {a}/mpc_code/run.mpc {b}/Programs/Source/run.mpc".
                           format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
                           shell=True)
 
