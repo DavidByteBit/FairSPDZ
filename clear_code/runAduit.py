@@ -364,6 +364,3 @@ def __validate_settings(settings_map):
     if error_found:
         raise Exception("\nThere was an error with the settings file. Please look above to determine what the error "
                         "was\n")
-
-
-run()
