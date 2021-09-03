@@ -1,6 +1,3 @@
-import sys
-import json
-
 
 def logistic_regression(settings_map):
     # settings_map = json.loads(sys.argv[1])
