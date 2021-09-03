@@ -1,0 +1,136 @@
+
+
+from Compiler.types import sint,sfix, regint, Array, MemValue
+from Compiler.library import print_ln, do_while, for_range
+from Compiler.util import if_else
+
+PORTNUM = 14000
+MAX_NUM_CLIENTS = 2
+
+N = int(program.args[1])   # num of images 48
+#num_classes = int(program.args[2])  # 7
+
+
+
+def accept_client():
+    client_socket_id = accept_client_connection(PORTNUM)
+    last = regint.read_from_socket(client_socket_id)
+    return client_socket_id, last
+
+def close_connections(number_clients):
+    @for_range(number_clients)
+    def _(i):
+        closeclientconnection(i)
+
+def client_input(t, client_socket_id):
+    """
+    Send share of random value, receive input and deduce share.
+    """    
+    return t.receive_from_client(N, client_socket_id)[0]
+
+
+def find_accuracy(y_truth_1d,  y_predict):
+
+    #corr = sfix(0)
+    corr_arr = Array(N,sint)
+    corr_arr.assign_vector(y_truth_1d.get_vector() -  y_predict.get_vector())
+    corr = sint(0)
+    for i in range(N):
+    #def _(i):
+        #global corr
+        right = (corr_arr[i] == 0)
+        print_ln("%s", right.reveal())
+        corr = corr + right
+
+    return corr
+
+
+
+def write_metrics_to_evaluator(socket, corr):    
+    # Setup authenticate result using share of random.
+    # client can validate ∑ winning_client_id * ∑ rnd_from_triple = ∑ auth_result
+    
+    rnd_from_triple = sint.get_random_triple()[0]
+    #auth_corr_m = corr_m * rnd_from_triple[0]
+    #auth_corr_f = corr_f * rnd_from_triple[1]
+    auth_corr = corr * rnd_from_triple
+
+    sint.write_shares_to_socket(socket, [corr, rnd_from_triple, auth_corr])
+    #sint.write_shares_to_socket(socket, [corr_f, rnd_from_triple[1], auth_corr_f])
+    #sint.write_shares_to_socket(socket, [count_m, rnd_from_triple[2], auth_count_m])
+
+
+def main():
+    """Listen in while loop for players to join a game.
+    Once maxiumum reached or have notified that round finished, run comparison and return result."""
+    # Start listening for client socket connections
+    listen_for_clients(PORTNUM)
+    print_ln('Listening for client connections on base port %s', PORTNUM)
+
+    def perfrom_private_fair_evaluation(_=None):
+        print_ln('Starting evaluation...')
+        print_ln('Player 0 is evaluator, Player 1 is model owner')
+
+        # Clients socket id (integer).
+        client_sockets = Array(MAX_NUM_CLIENTS, regint)
+        
+        # Number of clients
+        number_clients = MemValue(regint(0))
+
+        # Client ids to identity client
+        client_ids = Array(MAX_NUM_CLIENTS, sint)
+
+        # Keep track of received inputs
+        seen = Array(MAX_NUM_CLIENTS, regint)
+        seen.assign_all(0)
+        # Loop round waiting for each client to connect
+        @do_while
+        def client_connections():
+            client_id, last = accept_client()
+            @if_(client_id >= MAX_NUM_CLIENTS)
+            def _():
+                print_ln('client id too high')
+                crash()
+            client_sockets[client_id] = client_id
+            client_ids[client_id] = client_id
+            seen[client_id] = 1
+            @if_(last == 1)
+            def _():
+                number_clients.write(client_id + 1)
+            return (sum(seen) < number_clients) + (number_clients == 0)
+
+        def run_prog(t):
+
+            # Clients secret input.
+            y_predict = Array(N,t)
+            y_truth_1d = Array(N,t)
+            print_ln("Inside")
+            #y_prob = sfix.Matrix(N,num_classes)
+            #sensitive = Array(N,t)
+
+            #y_truth_1d = client_input(t, 0)
+            #sensitive = client_input(t, 0)
+            #y_predict = client_input(t, 1)
+            data = t.Matrix(MAX_NUM_CLIENTS,N)            
+            @for_range(number_clients)
+            def _(client_id):
+               # print(type(client_id))
+               data[client_id] = client_input(t, client_id)
+                #if MemValue(client_id) == 0:
+                #       y_truth_1d = data
+                #else:
+                #       y_predict = data
+            print_ln("Inside2")            
+            y_predict = data[1]
+            print_ln("y_predict:%s",data[1].reveal())
+            y_truth_1d = data[0]
+
+            corr = find_accuracy(y_truth_1d,  y_predict)
+            write_metrics_to_evaluator(client_sockets[0],
+                                    corr)
+        run_prog(sint)
+        #run_prog(sfix)
+        close_connections(number_clients)
+        return True
+    perfrom_private_fair_evaluation()
+main()
