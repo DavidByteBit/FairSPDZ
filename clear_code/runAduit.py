@@ -3,11 +3,11 @@ import subprocess
 import sys
 import os
 
-from FairSPDZ.clear_code.networking import client, server
+from networking import client, server
 
 from os import path
 
-from FairSPDZ.clear_code.processModelData import processModel
+from processModelData import processModel
 
 
 def run(setting_map_path):
