@@ -6,4 +6,4 @@ from clear_code import runAduit
 
 setting_file_path = sys.argv[1]
 
-runAduit(setting_file_path)
+runAduit.run(setting_file_path)
