@@ -42,7 +42,7 @@ def run(setting_map_path):
 # TODO: This currently only works for LR. Need to make general
 def _edit_source_code(settings_map, all_metadata):
 
-    mpc_file_path = settings_map["path_to_this_repo"] + "/run.mpc"
+    mpc_file_path = settings_map["path_to_this_repo"] + "/mpc_cod/run.mpc"
 
     # 'command line arguments' for our .mpc file
     num_of_parties = str(settings_map["num_of_parties"])
