@@ -1,2 +1,2 @@
-from runAduit import *
+from .runAduit import *
 
