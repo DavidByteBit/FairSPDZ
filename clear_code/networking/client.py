@@ -50,7 +50,7 @@ def _client_rec(settings_map):
                 s.sendall(str.encode("looking for data"))
                 others_metadata = s.recv(1024).decode()
         except:
-            if attempts > 50:
+            if attempts > 5000:
                 raise Exception
             if attempts % 10 == 0:
                 print("failed to connect, trying again")
