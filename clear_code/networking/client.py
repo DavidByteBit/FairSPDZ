@@ -8,9 +8,7 @@ def run(settings_map, metadata=None):
         return _client_rec(settings_map)
 
 
-
 def _client_send(settings_map, metadata):
-
     host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
@@ -38,13 +36,22 @@ def _client_send(settings_map, metadata):
 
 
 def _client_rec(settings_map):
-
     host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((host_ip, host_port))
-        s.sendall(str.encode("looking for data"))
-        others_metadata = s.recv(1024).decode()
+    connected = False
+    attempts = 0
+    while not connected:
+        attempts += 1
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((host_ip, host_port))
+                s.sendall(str.encode("looking for data"))
+                others_metadata = s.recv(1024).decode()
+        except:
+            if attempts > 50:
+                raise Exception
+            if attempts % 10 == 0:
+                print("failed to connect, trying again")
 
     return others_metadata
