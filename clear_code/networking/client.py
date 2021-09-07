@@ -1,5 +1,4 @@
 import socket
-import time
 
 
 def run(settings_map, metadata=None):
@@ -9,52 +8,31 @@ def run(settings_map, metadata=None):
         return _client_rec(settings_map)
 
 
+
 def _client_send(settings_map, metadata):
+
     host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
     party_id = settings_map["party"]
 
-    connected = False
-    attempts = 0
-
-    while not connected:
-        attempts += 1
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((host_ip, host_port))
-                print("sending: " + str(party_id) + metadata)
-                s.sendall(str.encode(str(party_id) + metadata))
-                connected = True
-                # data = s.recv(1024)
-        except:
-            if attempts > 50:
-                raise Exception
-            if attempts % 10 == 0:
-                print("failed to connect, trying again")
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host_ip, host_port))
+        print("sending: " + str(party_id) + metadata)
+        s.sendall(str.encode(str(party_id) + metadata))
+        # data = s.recv(1024)
 
     # print('Received', repr(data))
 
 
 def _client_rec(settings_map):
+
     host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
-    connected = False
-    attempts = 0
-    while not connected:
-        attempts += 1
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((host_ip, host_port))
-                s.sendall(str.encode("looking for data"))
-                others_metadata = s.recv(1024).decode()
-        except:
-            if attempts > 5000:
-                raise Exception
-            if attempts % 10 == 0:
-                print("failed to connect, trying again")
-                time.sleep(1)
-
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host_ip, host_port))
+        s.sendall(str.encode("looking for data"))
+        others_metadata = s.recv(1024).decode()
 
     return others_metadata
