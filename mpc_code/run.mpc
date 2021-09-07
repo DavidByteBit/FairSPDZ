@@ -37,10 +37,10 @@ if model_type == "lr":
     lr = models.logistic_regression(all_metadata, model_owner_id)
     classifications = lr.classify()
     ground_truth = lr.get_true_labels()
-    print_ln("%s", classifications.reveal())
+    #print_ln("%s", classifications.reveal())
 
     male, female = fairness_metrics.metric(ground_truth, classifications, lr.get_col(protected_col),
                                            protected_col_vals).traditional_metrics()
 
-    print_ln("%s", male.reveal())
-    print_ln("%s", female.reveal())
+    print_ln("male TP, FP, TN, FN: %s", male.reveal())
+    print_ln("female TP, FP, TN, FN: %s", female.reveal())

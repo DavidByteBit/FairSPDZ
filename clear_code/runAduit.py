@@ -22,11 +22,11 @@ def run(setting_map_path):
 
     print("processing data and retrieving its metadata")
     metadata = _getMetaData(settings_map)
-    print(metadata)
 
     print("distributing data")
     all_metadata = _distribute_Data(settings_map, metadata)
 
+    print("Compiling secure program")
     if settings_map["online"].lower() == "false":
         if settings_map["type_of_data"] == "model":
             _edit_source_code(settings_map, all_metadata)
@@ -105,7 +105,7 @@ def _run_mpSPDZ(settings_map):
     else:
         run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
-    print(run_cmd)
+    print("Starting secure program with command: {a}".format(a=run_cmd))
 
     subprocess.check_call(run_cmd, shell=True)
 
@@ -228,7 +228,7 @@ def _distribute_Data(settings_map, metadata):
     all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
 
-    print(all_metadata)
+    print("all metadata: {a}".format(a=all_metadata))
     return all_metadata
 
 

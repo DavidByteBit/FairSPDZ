@@ -16,11 +16,23 @@ def _client_send(settings_map, metadata):
 
     party_id = settings_map["party"]
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((host_ip, host_port))
-        print("sending: " + str(party_id) + metadata)
-        s.sendall(str.encode(str(party_id) + metadata))
-        # data = s.recv(1024)
+    connected = False
+    attempts = 0
+
+    while not connected:
+        attempts += 1
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((host_ip, host_port))
+                print("sending: " + str(party_id) + metadata)
+                s.sendall(str.encode(str(party_id) + metadata))
+                connected = True
+                # data = s.recv(1024)
+        except:
+            if attempts > 50:
+                raise Exception
+            if attempts % 10 == 0:
+                print("failed to connect, trying again")
 
     # print('Received', repr(data))
 
