@@ -1,4 +1,5 @@
 import socket
+import time
 
 
 def run(settings_map, metadata=None):
@@ -53,5 +54,7 @@ def _client_rec(settings_map):
                 raise Exception
             if attempts % 10 == 0:
                 print("failed to connect, trying again")
+                time.sleep(1)
+
 
     return others_metadata
