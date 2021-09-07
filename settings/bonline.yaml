@@ -1,5 +1,5 @@
 ---
- path_to_public_data: "/home/david/Desktop/fspdz/data"
+ path_to_public_data: "/home/lrTest/fspdz/data"
  party: "1"
  party_id_of_model_holder: "0"
  type_of_data: "audit"
