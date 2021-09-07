@@ -94,9 +94,16 @@ def __format_args(**kwargs):
 
 def _run_mpSPDZ(settings_map):
     runner = settings_map["VM"]
+    is_online = settings_map["online"].lower() == "true"
     path_to_spdz = settings_map['path_to_top_of_mpspdz']
 
-    run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
+    if is_online:
+        run_cmd = "cd {a} && ./{b} -pn {c} -h {d}".format(a=path_to_spdz, b=runner,
+                                                          c=settings_map["model_holders_port"],
+                                                          d=settings_map["model_holders_ip"],
+                                                          )
+    else:
+        run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
     print(run_cmd)
 
