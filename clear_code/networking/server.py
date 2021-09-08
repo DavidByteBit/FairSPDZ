@@ -35,7 +35,8 @@ def run(settings_map):
                     break
 
     print(others_metadata)
-    return others_metadata, addr
+    # addr[0] is the ip
+    return others_metadata, addr[0]
 
 
 def _setup_server_send(settings_map, metadata):
