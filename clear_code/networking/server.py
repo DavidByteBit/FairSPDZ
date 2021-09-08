@@ -5,14 +5,15 @@ import time
 from _thread import *
 
 
-def run(settings_map):
+def run(settings_map, ip="localhost"):
 
     # if metadata is not None:
     #     _setup_server_send(settings_map, metadata)
     # else:
     #     return _setup_server_rec(settings_map)
 
-    host_ip = settings_map['model_holders_ip']
+    host_ip = ip
+    # host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
     print(host_ip)
