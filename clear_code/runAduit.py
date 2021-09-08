@@ -221,7 +221,7 @@ def _distribute_Data(settings_map, metadata):
             print(party)
             print(others_ip[party])
             # server.run(settings_map, all_metadata)
-            client.run(settings_map, all_metadata, host_ip=others_ip[party])
+            client.run(settings_map, all_metadata, host_ip=others_ip[party], share_party_id=False)
 
         all_metadata = all_metadata.split("@seperate")
 
