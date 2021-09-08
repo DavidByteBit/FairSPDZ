@@ -15,6 +15,9 @@ def run(settings_map):
     host_ip = settings_map['model_holders_ip']
     host_port = int(settings_map['model_holders_port'])
 
+    print(host_ip)
+    print(host_port)
+
     others_metadata = None
     addr = None
 
