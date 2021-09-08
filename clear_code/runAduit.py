@@ -227,7 +227,7 @@ def _distribute_Data(settings_map, metadata):
 
     else:
         client.run(settings_map, metadata)
-        all_metadata = server.run(settings_map).split("@seperate")
+        all_metadata = server.run(settings_map)[0].split("@seperate")
         # all_metadata = client.run(settings_map).split("@seperate")
 
     all_metadata = str(all_metadata)
