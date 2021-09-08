@@ -9,8 +9,6 @@ from .processModelData import processModel
 from os import path
 
 
-
-
 def run(setting_map_path):
     # Path to settings file
 
@@ -18,7 +16,7 @@ def run(setting_map_path):
     settings_map = _parse_settings(setting_map_path)
 
     print("validating settings")
-    #validate_settings(settings_map)
+    # validate_settings(settings_map)
 
     print("processing data and retrieving its metadata")
     metadata = _getMetaData(settings_map)
@@ -26,7 +24,7 @@ def run(setting_map_path):
     print("distributing data")
     all_metadata = _distribute_Data(settings_map, metadata)
 
-    print("Compiling secure program")
+    print("Compiling secure program\n\n")
     if settings_map["online"].lower() == "false":
         if settings_map["type_of_data"] == "model":
             _edit_source_code(settings_map, all_metadata)
@@ -35,13 +33,11 @@ def run(setting_map_path):
         _edit_source_code(settings_map, all_metadata)
         _compile_spdz(settings_map)
 
-
     _run_mpSPDZ(settings_map)
 
 
 # TODO: This currently only works for LR. Need to make general
 def _edit_source_code(settings_map, all_metadata):
-
     mpc_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
     # 'command line arguments' for our .mpc file
@@ -128,7 +124,6 @@ def _compile_spdz(settings_map):
 
 
 def __populate_spdz_files(settings_map):
-
     def getListOfFiles(dirName):
         # create a list of file and sub directories
         # names in the given directory
@@ -205,25 +200,33 @@ def _distribute_Data(settings_map, metadata):
     # asynchronous execution to distribute data
     if is_model_owner:
 
+        others_ip = {}
+
         all_metadata.insert(party_id, metadata)
 
         print("setting up server")
         for i in range(parties - 1):
-            data = server.run(settings_map)  # rec
+            data, other_parties_ip = server.run(settings_map)  # receive data
+
             other_parties_id = int(data[0])
             others_metadata = data[1:]
+
             all_metadata.insert(other_parties_id, others_metadata)
+
+            others_ip[other_parties_id] = other_parties_ip
 
         all_metadata = "@seperate".join(all_metadata)
 
-        for i in range(parties - 1):
-            server.run(settings_map, all_metadata)
+        for party in others_ip:
+            # server.run(settings_map, all_metadata)
+            client.run(settings_map, all_metadata, host_ip=others_ip[party])
 
         all_metadata = all_metadata.split("@seperate")
 
     else:
         client.run(settings_map, metadata)
-        all_metadata = client.run(settings_map).split("@seperate")
+        all_metadata = server.run(settings_map).split("@seperate")
+        # all_metadata = client.run(settings_map).split("@seperate")
 
     all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
