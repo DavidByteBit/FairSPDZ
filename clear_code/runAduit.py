@@ -218,6 +218,8 @@ def _distribute_Data(settings_map, metadata):
         all_metadata = "@seperate".join(all_metadata)
 
         for party in others_ip:
+            print(party)
+            print(others_ip[party])
             # server.run(settings_map, all_metadata)
             client.run(settings_map, all_metadata, host_ip=others_ip[party])
 
