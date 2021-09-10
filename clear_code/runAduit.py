@@ -207,7 +207,7 @@ def _distribute_Data(settings_map, metadata):
 
         # If we are not online, we do not need to make a connection with the other parties
         if settings_map["online"].lower() == "false":
-            return all_metadata.split("@seperate").replace("\'", "").replace("\"", "")
+            return str(all_metadata.split("@seperate")).replace("\'", "").replace("\"", "")
 
         for party in others_ip:
             # print(party)
