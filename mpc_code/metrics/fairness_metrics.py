@@ -29,7 +29,6 @@ class metric():
             input actual_labels: The shares of the actual labels of data
             input predicted_labels: The shares of the predicted labels of data
 
-            TODO: Make sure I can actually return a tuple, or tuple like answer in MP-SPDZ
             returns (TP, FP, TN, FN) """
 
         protected_col = self.protected_col
@@ -77,3 +76,14 @@ class metric():
             female[3] += (x * y) * is_female
 
         return male, female
+
+
+    def equalized_odds(self):
+        male, female = self.traditional_metrics()
+
+        male_res = male[1]/(male[1] + male[2])
+        fem_res = female[1]/(female[1] + female[2])
+
+        return male_res, fem_res
+
+

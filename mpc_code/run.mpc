@@ -25,22 +25,43 @@ import json
 # @args - Public inputs
 settings_map = {}
 
+ground_truth = None
+classifications = None
+model = None
+
+all_metadata = json.loads(settings_map['all_metadata'])
+model_owner_id = int(settings_map['model_owner_id'])
+num_of_parties = int(settings_map['num_of_parties'])
+protected_col_index = int(settings_map["protected_col"])
+protected_col_vals = json.loads(settings_map["protected_col_vals"])
+
 model_type = settings_map['model_type']
 
 if model_type == "lr":
-    all_metadata = json.loads(settings_map['all_metadata'])
-    model_owner_id = int(settings_map['model_owner_id'])
-    num_of_parties = int(settings_map['num_of_parties'])
-    protected_col = int(settings_map["protected_col"])
-    protected_col_vals = json.loads(settings_map["protected_col_vals"])
 
-    lr = models.logistic_regression(all_metadata, model_owner_id)
-    classifications = lr.classify()
-    ground_truth = lr.get_true_labels()
+
+    model = models.logistic_regression(all_metadata, model_owner_id)
+    classifications = model.classify()
+    ground_truth = model.get_true_labels()
     #print_ln("%s", classifications.reveal())
 
-    male, female = fairness_metrics.metric(ground_truth, classifications, lr.get_col(protected_col),
-                                           protected_col_vals).traditional_metrics()
+
+# TODO: Make this work with a variable amount of metrics
+metrics = settings_map["metrics"]
+
+fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
+                                       protected_col_vals)
+
+if metrics.lower() == "EO"
+
+    male, female = fairness_metric.equalized_odds()
+
+    print_ln("male TP, FP, TN, FN: %s", male.reveal())
+    print_ln("female TP, FP, TN, FN: %s", female.reveal())
+
+elif metrics.lower() == "classic":
+
+    male, female = fairness_metric.traditional_metrics()
 
     print_ln("male TP, FP, TN, FN: %s", male.reveal())
     print_ln("female TP, FP, TN, FN: %s", female.reveal())

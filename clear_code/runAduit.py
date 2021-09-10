@@ -2,6 +2,7 @@ import yaml
 import subprocess
 import sys
 import os
+import time
 
 from .networking import client, server
 from .processModelData import processModel
@@ -12,19 +13,23 @@ from os import path
 def run(setting_map_path):
     # Path to settings file
 
-    print("parsing settings")
+    print("parsing settings\n")
     settings_map = _parse_settings(setting_map_path)
 
-    print("validating settings")
+    time.sleep(1)
+
+    # print("validating settings")
     # validate_settings(settings_map)
 
-    print("processing data and retrieving its metadata")
+    print("processing data and retrieving its metadata\n")
     metadata = _getMetaData(settings_map)
 
-    print("distributing data")
+    time.sleep(1)
+
+    print("distributing data\n")
     all_metadata = _distribute_Data(settings_map, metadata)
 
-    print("Compiling secure program\n\n")
+    print("Compiling secure program -- This may take serveral minutes\n\n")
     if settings_map["online"].lower() == "false":
         if settings_map["type_of_data"] == "model":
             _edit_source_code(settings_map, all_metadata)
@@ -32,6 +37,10 @@ def run(setting_map_path):
     else:
         _edit_source_code(settings_map, all_metadata)
         _compile_spdz(settings_map)
+
+    print("Compilation successful, running secure code")
+
+    time.sleep(1)
 
     _run_mpSPDZ(settings_map)
 
@@ -46,6 +55,7 @@ def _edit_source_code(settings_map, all_metadata):
     model_owner_id = settings_map["party_id_of_model_holder"]
     protected_col = settings_map["protected_col"]
     protected_col_vals = settings_map["protected_col_vals"]
+    metrics = settings_map["metrics"]
 
     file = []
     found_delim = False
@@ -64,7 +74,7 @@ def _edit_source_code(settings_map, all_metadata):
 
     compile_args = __format_args(num_of_parties=num_of_parties, model_type=model_type, model_owner_id=model_owner_id,
                                  all_metadata=all_metadata, protected_col=protected_col,
-                                 protected_col_vals=protected_col_vals)
+                                 protected_col_vals=protected_col_vals, metric=metric)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
 
@@ -119,8 +129,7 @@ def _compile_spdz(settings_map):
     # and direct it to the Compiler directory in the spdz directory (skips run.mpc)
     __populate_spdz_files(settings_map)
 
-    # TODO: Should not be 'spdz' in general, needs to change
-    subprocess.check_call("./../spdz/compile.py {a}".format(a=c), shell=True)
+    subprocess.check_call("./{a}compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c), shell=True)
 
 
 def __populate_spdz_files(settings_map):
@@ -206,7 +215,7 @@ def _distribute_Data(settings_map, metadata):
 
         print("setting up server")
         for i in range(parties - 1):
-            data, other_parties_ip = server.run(settings_map)  # receive data
+            data, other_parties_ip = server.run(settings_map, introduce=True)  # receive data
 
             other_parties_id = int(data[0])
             others_metadata = data[1:]
@@ -218,15 +227,15 @@ def _distribute_Data(settings_map, metadata):
         all_metadata = "@seperate".join(all_metadata)
 
         for party in others_ip:
-            print(party)
-            print(others_ip[party])
+            # print(party)
+            # print(others_ip[party])
             # server.run(settings_map, all_metadata)
             client.run(settings_map, all_metadata, host_ip=others_ip[party], share_party_id=False)
 
         all_metadata = all_metadata.split("@seperate")
 
     else:
-        client.run(settings_map, metadata)
+        client.run(settings_map, metadata, introduce=True)
         all_metadata = server.run(settings_map)[0].split("@seperate")
         # all_metadata = client.run(settings_map).split("@seperate")
 
