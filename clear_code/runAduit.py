@@ -84,7 +84,7 @@ def _edit_source_code(settings_map, all_metadata):
 
     compile_args = __format_args(num_of_parties=num_of_parties, model_type=model_type, model_owner_id=model_owner_id,
                                  all_metadata=all_metadata, protected_col=protected_col,
-                                 protected_col_vals=protected_col_vals, metric=metrics)
+                                 protected_col_vals=protected_col_vals, metrics=metrics)
 
     file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
 
