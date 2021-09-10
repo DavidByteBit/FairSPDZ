@@ -9,9 +9,6 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
 
     host_port = int(settings_map['model_holders_port'])
     party_id = settings_map["party"]
-    Connected - transferring
-    public
-    data
 
     if introduce:
         print("Connecting to Alice...\n")
