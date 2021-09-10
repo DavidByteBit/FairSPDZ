@@ -56,8 +56,8 @@ if metrics.lower() == "eo":
 
     male, female = fairness_metric.equalized_odds()
 
-    print_ln("%s", male.reveal())
-    print_ln("%s", female.reveal())
+    print_ln("Equalized odds: %s", male.reveal())
+    print_ln("Equalized odds: %s", female.reveal())
 
 elif metrics.lower() == "classic":
 
