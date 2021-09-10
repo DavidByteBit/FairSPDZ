@@ -34,6 +34,16 @@ def run(setting_map_path):
         if settings_map["type_of_data"] == "model":
             _edit_source_code(settings_map, all_metadata)
             _compile_spdz(settings_map)
+
+        # This 'else' is fairly sloppy. Since terminal A is compiling, we need a way for terminal B
+        # to wait for it. Only issue is that they run in different processes, so the process running
+        # code on terminal B can't check the state of the data on terminal A. Thus, we can use the
+        # existence of a file as a flag for terminal B. TODO: See if there is a better way to accomplish this...
+        else:
+            time.sleep(1)
+            while path.exists(".tmp.txt"):
+                time.sleep(0.1)
+
     else:
         _edit_source_code(settings_map, all_metadata)
         _compile_spdz(settings_map)
@@ -129,7 +139,10 @@ def _compile_spdz(settings_map):
     # and direct it to the Compiler directory in the spdz directory (skips run.mpc)
     __populate_spdz_files(settings_map)
 
-    subprocess.check_call("./{a}compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c), shell=True)
+    subprocess.check_call(".{a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
+                          shell=True)
+
+    subprocess.check_call("rm tmp.txt")
 
 
 def __populate_spdz_files(settings_map):
@@ -163,40 +176,6 @@ def __populate_spdz_files(settings_map):
         subprocess.check_call("cp {a} {b}/Compiler/{c}".
                               format(a=path_data[0], b=settings_map["path_to_top_of_mpspdz"], c=path_data[1]),
                               shell=True)
-
-
-def _compile_spdz_dep(settings_map, all_metadata):
-    # Compile .mpc program
-    c = settings_map["compiler"]
-    num_of_parties = str(settings_map["num_of_parties"])
-    model_type = settings_map["model_type"]
-    online = settings_map["online"]
-    model_owner_id = 0
-
-    compiler_args = "{a} {b} {c} {d}".format(a=num_of_parties, b=model_owner_id, c=model_type, d=all_metadata)
-
-    if online.lower() == "false":
-        if settings_map["type_of_data"] == "model":
-            # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-            # subprocess.check_call("rm ../spdz/Compiler/models.py")
-            subprocess.check_call("cp {a}/run.mpc {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                                  shell=True)
-            subprocess.check_call("cp {a}/models/models.py {b}/Programs/Source/run.mpc".
-                                  format(a=settings_map['path_to_this_repo'], b=settings_map["path_to_top_of_mpspdz"]),
-                                  shell=True)
-            subprocess.check_call("./../spdz/compile.py {a} {b}".format(a=c, b=compiler_args), shell=True)
-    else:
-
-        # subprocess.check_call("rm ../spdz/Programs/Source/run.mpc")
-        # subprocess.check_call("../spdz/Compiler/models.py")
-        subprocess.check_call("cp run.mpc {a}/Programs/Source/run.mpc".
-                              format(a=settings_map["path_to_top_of_mpspdz"]))
-        subprocess.check_call("cp models/models.py {a}/Compiler/models.py".
-                              format(a=settings_map["path_to_top_of_mpspdz"]))
-        subprocess.check_call("./../spdz/compile.py {a} {b}".format(a=c, b=compiler_args), shell=True)
-
-    return compiler_args
 
 
 def _distribute_Data(settings_map, metadata):
