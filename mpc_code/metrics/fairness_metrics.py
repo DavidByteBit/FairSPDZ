@@ -81,9 +81,9 @@ class metric():
     def equalized_odds(self):
         male, female = self.traditional_metrics()
 
-        male_res = male[1]/(male[1] + male[2])
-        fem_res = female[1]/(female[1] + female[2])
+        # male_res = male[1]/(male[1] + male[2])
+        # fem_res = female[1]/(female[1] + female[2])
 
-        return male_res, fem_res
+        return male, female
 
 
