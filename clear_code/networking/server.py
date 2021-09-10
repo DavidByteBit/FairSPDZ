@@ -16,8 +16,8 @@ def run(settings_map, introduce=False):
     host_ip = settings_map['my_private_ip']
     host_port = int(settings_map['model_holders_port'])
 
-    print(host_ip)
-    print(host_port)
+    # print(host_ip)
+    # print(host_port)
 
     others_metadata = None
     addr = None
@@ -33,7 +33,7 @@ def run(settings_map, introduce=False):
         conn, addr = s.accept()
         with conn:
             if introduce:
-                print("Connected - transferring public data")
+                print("Connected - transferring public data\n")
                 time.sleep(1)
             #print('Connected by', addr)
             while True:
