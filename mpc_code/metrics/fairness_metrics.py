@@ -84,9 +84,9 @@ class metric():
         # male = maleSecret.reveal_nested()
         # female = femaleSecret.reveal_nested()
 
-        male_res = male[1].int_div(male[1] + male[2])
-        fem_res = female[1].int_div(female[1] + female[2])
+        # male_res = male[1].int_div(male[1] + male[2])
+        # fem_res = female[1].int_div(female[1] + female[2])
 
-        return male_res, fem_res
+        return male, female
 
 

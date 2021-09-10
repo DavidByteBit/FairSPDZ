@@ -1,5 +1,5 @@
 ---
- path_to_public_data: "/home/david/Desktop/fspdz/data/lr_model.sav"
+ path_to_public_data: "/home/david/Desktop/fspdz/data/fold0/lr_model.sav"
  party: "0"
  party_id_of_model_holder: "0"
  type_of_data: "model"
