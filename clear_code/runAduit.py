@@ -285,6 +285,7 @@ def __write_data(settings_map):
     # Write data to private file
     with open(private_data_path, 'w') as stream:
         s = " ".join(data)
+        print(s)
         stream.write(s)
 
     return [str(rows), str(cols)]
