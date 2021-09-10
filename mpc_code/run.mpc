@@ -52,7 +52,7 @@ metrics = settings_map["metrics"]
 fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
                                        protected_col_vals)
 
-if metrics.lower() == "EO"
+if metrics.lower() == "EO":
 
     male, female = fairness_metric.equalized_odds()
 

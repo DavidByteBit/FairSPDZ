@@ -9,6 +9,9 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
 
     host_port = int(settings_map['model_holders_port'])
     party_id = settings_map["party"]
+    Connected - transferring
+    public
+    data
 
     if introduce:
         print("Connecting to Alice...\n")
@@ -22,6 +25,9 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((host_ip, host_port))
+                # Not the cleanest, but ensures we leave the while loop
+                # TODO: Find a better way to query for connection to a host that may not be ready
+                attempts = max_attempts
 
                 if introduce:
                     print("Connected - transferring public data\n")
@@ -34,7 +40,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
                 else:
                     msg = metadata
 
-                print("sending: " + msg)
+                # print("sending: " + msg)
                 s.sendall(str.encode(msg))
                 # data = s.recv(1024)
 
