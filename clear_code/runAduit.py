@@ -192,7 +192,7 @@ def _distribute_Data(settings_map, metadata):
 
         all_metadata.insert(party_id, metadata)
 
-        #print("setting up server")
+        # print("setting up server")
         for i in range(parties - 1):
             data, other_parties_ip = server.run(settings_map, introduce=True)  # receive data
 
@@ -205,6 +205,10 @@ def _distribute_Data(settings_map, metadata):
 
         all_metadata = "@seperate".join(all_metadata)
 
+        # If we are not online, we do not need to make a connection with the other parties
+        if settings_map["online"].lower() == "false":
+            return all_metadata.split("@seperate")
+
         for party in others_ip:
             # print(party)
             # print(others_ip[party])
@@ -214,7 +218,12 @@ def _distribute_Data(settings_map, metadata):
         all_metadata = all_metadata.split("@seperate")
 
     else:
+
         client.run(settings_map, metadata, introduce=True)
+
+        if settings_map["online"].lower() == "false":
+            return
+
         all_metadata = server.run(settings_map)[0].split("@seperate")
         # all_metadata = client.run(settings_map).split("@seperate")
 
