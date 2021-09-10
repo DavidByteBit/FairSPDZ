@@ -40,8 +40,8 @@ def run(setting_map_path):
         # code on terminal B can't check the state of the data on terminal A. Thus, we can use the
         # existence of a file as a flag for terminal B. TODO: See if there is a better way to accomplish this...
         else:
-            time.sleep(1)
-            while path.exists(".tmp.txt"):
+            time.sleep(2)
+            while path.exists("tmp.txt"):
                 time.sleep(0.1)
 
     else:
@@ -139,7 +139,7 @@ def _compile_spdz(settings_map):
     # and direct it to the Compiler directory in the spdz directory (skips run.mpc)
     __populate_spdz_files(settings_map)
 
-    subprocess.check_call(".{a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
+    subprocess.check_call("python3 {a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
                           shell=True)
 
     subprocess.check_call("rm tmp.txt")
