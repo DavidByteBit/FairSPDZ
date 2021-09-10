@@ -213,7 +213,7 @@ def _distribute_Data(settings_map, metadata):
 
         all_metadata.insert(party_id, metadata)
 
-        print("setting up server")
+        #print("setting up server")
         for i in range(parties - 1):
             data, other_parties_ip = server.run(settings_map, introduce=True)  # receive data
 
@@ -242,7 +242,7 @@ def _distribute_Data(settings_map, metadata):
     all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
 
-    print("all metadata: {a}".format(a=all_metadata))
+    #print("all metadata: {a}".format(a=all_metadata))
     return all_metadata
 
 
