@@ -108,6 +108,9 @@ def __format_args(**kwargs):
         print(kwargs[key])
         if kwargs[key] is list:
             res += "\'{key}\': {value},".format(key=key, value=kwargs[key])
+            print("HERE")
+            print(key)
+            print(kwargs[key])
         else:
             res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
 
