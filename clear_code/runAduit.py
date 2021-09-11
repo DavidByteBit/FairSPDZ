@@ -67,6 +67,9 @@ def _edit_source_code(settings_map, all_metadata):
     protected_col_vals = settings_map["protected_col_vals"]
     metrics = settings_map["metrics"]
 
+    # make sure metrics is ready to be read as a json
+    metrics = str(metrics.replace("[", "").replace("]","").split(","))
+
     file = []
     found_delim = False
     start_of_delim = 0
