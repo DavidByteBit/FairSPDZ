@@ -24,8 +24,7 @@ import json
 #     print("WARNING - Could not read args correctly")
 #     raise Exception
 
-program.use_split(2)
-
+# programs.use_split(2)
 
 # @args - Public inputs
 settings_map = {}
