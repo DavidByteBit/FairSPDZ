@@ -61,7 +61,7 @@ if metrics.lower() == "eo":
 
 elif metrics.lower() == "classic":
 
-    male, female = fairness_metric.traditional_metrics()
+    male, female = fairness_metric.baseline_metrics()
 
     print_ln("male TP, FP, TN, FN: %s", male.reveal())
     print_ln("female TP, FP, TN, FN: %s", female.reveal())
