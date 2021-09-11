@@ -55,7 +55,7 @@ def run(setting_map_path):
     _run_mpSPDZ(settings_map)
 
 
-# TODO: This currently only works for LR. Need to make general
+# TODO: This currently only tested for LR
 def _edit_source_code(settings_map, all_metadata):
     mpc_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
@@ -86,7 +86,7 @@ def _edit_source_code(settings_map, all_metadata):
                                  all_metadata=all_metadata, protected_col=protected_col,
                                  protected_col_vals=protected_col_vals, metrics=metrics)
 
-    file[start_of_delim + 1] = "settings_map = {n}\n".format(n=compile_args)
+    file[start_of_delim + 1] = "\tsettings_map = {n}\n".format(n=compile_args)
 
     # file as a string
     file = ''.join([s for s in file])
