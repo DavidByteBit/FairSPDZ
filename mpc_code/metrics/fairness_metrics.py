@@ -91,12 +91,37 @@ class metric():
 
         maleSecret, femaleSecret = self.base_metrics
 
-        male = maleSecret
-        female = femaleSecret
+        male_res = maleSecret[1]/(maleSecret[1] + maleSecret[2])
+        female_res = femaleSecret[1]/(femaleSecret[1] + femaleSecret[2])
 
-        male_res = male[1]/(male[1] + male[2])
-        fem_res = female[1]/(female[1] + female[2])
+        return male_res, female_res
 
-        return male_res, fem_res
+
+    def demographic_parity(self):
+
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[0] + maleSecret[1]
+        female_res = femaleSecret[0] + femaleSecret[1]
+
+        return male_res, female_res
+
+
+    def equal_opportunity(self):
+
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[0] / (maleSecret[0] + maleSecret[1])
+        female_res = femaleSecret[0] / (femaleSecret[0] + femaleSecret[1])
+
+        return male_res, female_res
 
 

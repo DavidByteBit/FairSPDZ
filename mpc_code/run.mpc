@@ -38,21 +38,19 @@ protected_col_vals = json.loads(settings_map["protected_col_vals"])
 model_type = settings_map['model_type']
 
 if model_type == "lr":
-
-
     model = models.logistic_regression(all_metadata, model_owner_id)
     classifications = model.classify()
     ground_truth = model.get_true_labels()
-    #print_ln("%s", classifications.reveal())
-
+    # print_ln("%s", classifications.reveal())
 
 # TODO: Make this work with a variable amount of metrics
 metrics = settings_map["metrics"]
 
 fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
-                                       protected_col_vals)
+                                          protected_col_vals)
 
-if metrics.lower() == "eo":
+
+if metrics.lower() == "equalized_odds":
 
     male, female = fairness_metric.equalized_odds()
 
@@ -65,3 +63,15 @@ elif metrics.lower() == "classic":
 
     print_ln("male TP, FP, TN, FN: %s", male.reveal())
     print_ln("female TP, FP, TN, FN: %s", female.reveal())
+
+elif metrics.lower() == "demographic_parity":
+    male, female = fairness_metric.demographic_parity()
+
+    print_ln("Equalized odds: %s", male.reveal())
+    print_ln("Equalized odds: %s", female.reveal())
+
+elif metrics.lower() == "equal_opportunity":
+    male, female = fairness_metric.equal_opportunity()
+
+    print_ln("Equalized odds: %s", male.reveal())
+    print_ln("Equalized odds: %s", female.reveal())
