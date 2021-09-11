@@ -11,6 +11,7 @@
  compile: "false"
  model_type: "lr"
  metrics: "[baseline,equalized_odds,demographic_parity,equal_opportunity]"
+ recipients: "[0,1]"
  num_of_parties: "2"
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 1 run"

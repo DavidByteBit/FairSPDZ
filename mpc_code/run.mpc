@@ -37,6 +37,7 @@ all_metadata = json.loads(settings_map['all_metadata'])
 model_owner_id = int(settings_map['model_owner_id'])
 protected_col_index = int(settings_map["protected_col"])
 protected_col_vals = json.loads(settings_map["protected_col_vals"])
+recipients = json.loads(settings_map["recipients"])
 
 model_type = settings_map['model_type']
 
@@ -69,23 +70,25 @@ def main():
 def equalized_odds(metric_function):
     male, female = metric_function.equalized_odds()
 
-    print_ln("Equalized odds - male: %s", male.reveal())
-    print_ln("Equalized odds - female: %s", female.reveal())
+    for val in recipients:
+        print_ln_to(val, "Equalized odds - male: %s", male.reveal())
+        print_ln_to(val, "Equalized odds - female: %s", female.reveal())
 
 
 def demographic_parity(metric_function):
     male, female = metric_function.demographic_parity()
 
-    print_ln("Demographic parity - male: %s", male.reveal())
-    print_ln("Demographic parity - fema"
-             "le: %s", female.reveal())
+    for val in recipients:
+        print_ln_to(val, "Demographic parity - male: %s", male.reveal())
+        print_ln_to(val, "Demographic parity - female: %s", female.reveal())
 
 
 def equal_opportunity(metric_function):
     male, female = metric_function.equal_opportunity()
 
-    print_ln("Equal opportunity - male: %s", male.reveal())
-    print_ln("Equal opportunity - female: %s", female.reveal())
+    for val in recipients:
+        print_ln_to(val, "Equal opportunity - male: %s", male.reveal())
+        print_ln_to(val, "Equal opportunity - female: %s", female.reveal())
 
 
 def equalized_odds_ratio(metric_function):
@@ -99,8 +102,9 @@ def subgroup_accuracy(metric_function):
 def baseline(metric_function):
     male, female = metric_function.baseline_metrics()
 
-    print_ln("male TP, FP, TN, FN: %s", male.reveal())
-    print_ln("female TP, FP, TN, FN: %s", female.reveal())
+    for val in recipients:
+        print_ln_to(val, "male TP, FP, TN, FN: %s", male.reveal())
+        print_ln_to(val, "female TP, FP, TN, FN: %s", female.reveal())
 
 
 
