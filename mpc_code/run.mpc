@@ -9,69 +9,97 @@ from Compiler import fairness_metrics
 
 import json
 
-# from Compiler.library import public_input()
 
-# program.options_from_args()
-#
-# try:
-#     num_of_parties= int(program.args[1])
-#     model_owner_id= int(program.args[2])
-#     model_type = program.args[3]
-#     all_metadata = program.args[4]
-# except:
-#     print("WARNING - Could not read args correctly")
-#     raise Exception
+def main():
+    # from Compiler.library import public_input()
 
-# @args - Public inputs
-settings_map = {}
+    # program.options_from_args()
+    #
+    # try:
+    #     num_of_parties= int(program.args[1])
+    #     model_owner_id= int(program.args[2])
+    #     model_type = program.args[3]
+    #     all_metadata = program.args[4]
+    # except:
+    #     print("WARNING - Could not read args correctly")
+    #     raise Exception
 
-ground_truth = None
-classifications = None
-model = None
+    # @args - Public inputs
+    settings_map = {}
 
-all_metadata = json.loads(settings_map['all_metadata'])
-model_owner_id = int(settings_map['model_owner_id'])
-num_of_parties = int(settings_map['num_of_parties'])
-protected_col_index = int(settings_map["protected_col"])
-protected_col_vals = json.loads(settings_map["protected_col_vals"])
+    ground_truth = None
+    classifications = None
+    model = None
 
-model_type = settings_map['model_type']
+    all_metadata = json.loads(settings_map['all_metadata'])
+    model_owner_id = int(settings_map['model_owner_id'])
+    protected_col_index = int(settings_map["protected_col"])
+    protected_col_vals = json.loads(settings_map["protected_col_vals"])
 
-if model_type == "lr":
-    model = models.logistic_regression(all_metadata, model_owner_id)
-    classifications = model.classify()
-    ground_truth = model.get_true_labels()
-    # print_ln("%s", classifications.reveal())
+    model_type = settings_map['model_type']
 
-# TODO: Make this work with a variable amount of metrics
-metrics = settings_map["metrics"]
+    if model_type == "lr":
+        model = models.logistic_regression(all_metadata, model_owner_id)
+        classifications = model.classify()
+        ground_truth = model.get_true_labels()
+        # print_ln("%s", classifications.reveal())
 
-fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
-                                          protected_col_vals)
+    metrics = json.loads(settings_map["metrics"])
+
+    fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
+                                              protected_col_vals)
+
+    metric_options = {"equalized_odds": equalized_odds,
+                      "demographic_parity": demographic_parity,
+                      "equal_opportunity": equal_opportunity,
+                      "equalized_odds_ratio": equalized_odds_ratio,
+                      "subgroup_accuracy": subgroup_accuracy,
+                      "baseline": baseline}
+
+    for metric in metrics:
+        metric_options[metric](fairness_metric)
 
 
-if metrics.lower() == "equalized_odds":
 
-    male, female = fairness_metric.equalized_odds()
+def equalized_odds(metric_function):
+    male, female = metric_function.equalized_odds()
 
-    print_ln("Equalized odds: %s", male.reveal())
-    print_ln("Equalized odds: %s", female.reveal())
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
 
-elif metrics.lower() == "classic":
 
-    male, female = fairness_metric.baseline_metrics()
+def demographic_parity(metric_function):
+    male, female = metric_function.demographic_parity()
+
+    print_ln("Demographic parity - male: %s", male.reveal())
+    print_ln("Demographic parity - fema"
+             "le: %s", female.reveal())
+
+
+def equal_opportunity(metric_function):
+    male, female = metric_function.equal_opportunity()
+
+    print_ln("Equal opportunity - male: %s", male.reveal())
+    print_ln("Equal opportunity - female: %s", female.reveal())
+
+
+def equalized_odds_ratio(metric_function):
+    pass
+
+
+def subgroup_accuracy(metric_function):
+    pass
+
+
+def baseline(metric_function):
+    male, female = metric_function.baseline_metrics()
 
     print_ln("male TP, FP, TN, FN: %s", male.reveal())
     print_ln("female TP, FP, TN, FN: %s", female.reveal())
 
-elif metrics.lower() == "demographic_parity":
-    male, female = fairness_metric.demographic_parity()
 
-    print_ln("Equalized odds: %s", male.reveal())
-    print_ln("Equalized odds: %s", female.reveal())
 
-elif metrics.lower() == "equal_opportunity":
-    male, female = fairness_metric.equal_opportunity()
 
-    print_ln("Equalized odds: %s", male.reveal())
-    print_ln("Equalized odds: %s", female.reveal())
+
+
+main()
