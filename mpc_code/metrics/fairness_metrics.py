@@ -44,13 +44,13 @@ class metric():
 
         # TODO: Needs to be more general actually... need to have as many arrays as there are attribute values
         # TP, FP, TN, FN
-        male = sint.Array(4)
-        female = sint.Array(4)
+        male = sfix.Array(4)
+        female = sfix.Array(4)
 
         @for_range(4)
         def _(i):
-            male[i] = sint(0)
-            female[i] = sint(0)
+            male[i] = sfix(0)
+            female[i] = sfix(0)
 
         @for_range_opt(l)
         def _(i):
@@ -79,14 +79,14 @@ class metric():
 
 
     def equalized_odds(self):
-        male, female = self.traditional_metrics()
+        maleSecret, femaleSecret = self.traditional_metrics()
 
-        # male = maleSecret.reveal_nested()
-        # female = femaleSecret.reveal_nested()
+        male = maleSecret.reveal_nested()
+        female = femaleSecret.reveal_nested()
 
-        # male_res = male[1].int_div(male[1] + male[2])
-        # fem_res = female[1].int_div(female[1] + female[2])
+        male_res = male[1]/(male[1] + male[2])
+        fem_res = female[1]/(female[1] + female[2])
 
-        return male, female
+        return male_res, fem_res
 
 
