@@ -10,6 +10,22 @@ from Compiler import fairness_metrics
 import json
 
 
+
+# from Compiler.library import public_input()
+
+# program.options_from_args()
+#
+# try:
+#     num_of_parties= int(program.args[1])
+#     model_owner_id= int(program.args[2])
+#     model_type = program.args[3]
+#     all_metadata = program.args[4]
+# except:
+#     print("WARNING - Could not read args correctly")
+#     raise Exception
+
+
+
 # @args - Public inputs
 settings_map = {}
 
@@ -17,33 +33,20 @@ ground_truth = None
 classifications = None
 model = None
 
+all_metadata = json.loads(settings_map['all_metadata'])
+model_owner_id = int(settings_map['model_owner_id'])
+protected_col_index = int(settings_map["protected_col"])
+protected_col_vals = json.loads(settings_map["protected_col_vals"])
+
+model_type = settings_map['model_type']
+
+if model_type == "lr":
+    model = models.logistic_regression(all_metadata, model_owner_id)
+    classifications = model.classify()
+    ground_truth = model.get_true_labels()
+
 
 def main():
-    # from Compiler.library import public_input()
-
-    # program.options_from_args()
-    #
-    # try:
-    #     num_of_parties= int(program.args[1])
-    #     model_owner_id= int(program.args[2])
-    #     model_type = program.args[3]
-    #     all_metadata = program.args[4]
-    # except:
-    #     print("WARNING - Could not read args correctly")
-    #     raise Exception
-
-    all_metadata = json.loads(settings_map['all_metadata'])
-    model_owner_id = int(settings_map['model_owner_id'])
-    protected_col_index = int(settings_map["protected_col"])
-    protected_col_vals = json.loads(settings_map["protected_col_vals"])
-
-    model_type = settings_map['model_type']
-
-    if model_type == "lr":
-        model = models.logistic_regression(all_metadata, model_owner_id)
-        classifications = model.classify()
-        ground_truth = model.get_true_labels()
-        # print_ln("%s", classifications.reveal())
 
     metrics = json.loads(settings_map["metrics"])
 
