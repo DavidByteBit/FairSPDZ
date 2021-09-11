@@ -70,6 +70,8 @@ def _edit_source_code(settings_map, all_metadata):
     # make sure metrics is ready to be read as a json
     metrics = metrics.replace("[", "").replace("]", "").split(",")
 
+    print(type(metrics))
+
     file = []
     found_delim = False
     start_of_delim = 0
@@ -103,10 +105,10 @@ def _edit_source_code(settings_map, all_metadata):
 def __format_args(**kwargs):
     res = "{"
     for key in kwargs:
-
-        res += "\'{key}\': {value},".format(key=key, value=kwargs[key])
-        # else:
-        #     res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
+        if kwargs[key] is list:
+            res += "\'{key}\': {value},".format(key=key, value=kwargs[key])
+        else:
+            res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
 
     # Omit last comma
     res = res[:-1] + "}"
