@@ -10,6 +10,14 @@ from Compiler import fairness_metrics
 import json
 
 
+# @args - Public inputs
+settings_map = {}
+
+ground_truth = None
+classifications = None
+model = None
+
+
 def main():
     # from Compiler.library import public_input()
 
@@ -23,13 +31,6 @@ def main():
     # except:
     #     print("WARNING - Could not read args correctly")
     #     raise Exception
-
-    # @args - Public inputs
-    settings_map = {}
-
-    ground_truth = None
-    classifications = None
-    model = None
 
     all_metadata = json.loads(settings_map['all_metadata'])
     model_owner_id = int(settings_map['model_owner_id'])
