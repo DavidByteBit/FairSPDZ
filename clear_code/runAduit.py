@@ -70,8 +70,6 @@ def _edit_source_code(settings_map, all_metadata):
     # make sure metrics is ready to be read as a json
     metrics = metrics.replace("[", "").replace("]", "").split(",")
 
-    print(type(metrics))
-
     file = []
     found_delim = False
     start_of_delim = 0
