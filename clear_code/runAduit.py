@@ -151,7 +151,7 @@ def _compile_spdz(settings_map):
     subprocess.check_call("python3 {a}/compile.py {b} > tmp.txt".format(a=settings_map["path_to_top_of_mpspdz"], b=c),
                           shell=True)
 
-    subprocess.check_call("rm tmp.txt", shell=True)
+    #subprocess.check_call("rm tmp.txt", shell=True)
 
 
 def __populate_spdz_files(settings_map):
