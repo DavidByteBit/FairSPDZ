@@ -81,8 +81,8 @@ class metric():
     def equalized_odds(self):
         maleSecret, femaleSecret = self.traditional_metrics()
 
-        male = maleSecret.reveal_nested()
-        female = femaleSecret.reveal_nested()
+        male = maleSecret
+        female = femaleSecret
 
         male_res = male[1]/(male[1] + male[2])
         fem_res = female[1]/(female[1] + female[2])
