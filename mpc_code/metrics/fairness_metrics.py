@@ -14,8 +14,10 @@ class metric():
         self.predicted_labels = predicted_labels
         self.protected_col = protected_col
         self.protected_col_vals = protected_col_vals
+        # This will contain TP, FP, TN, and FN
+        self.base_metrics = []
 
-    def traditional_metrics(self):
+    def baseline_metrics(self):
         """ Calculates some of the most common metrics:
             True Positive (TP)
             False Positive (FP)
@@ -75,11 +77,19 @@ class metric():
             female[2] += (x * w) * is_female
             female[3] += (x * y) * is_female
 
+        self.base_metrics.append(male)
+        self.base_metrics.append(female)
+
         return male, female
 
 
     def equalized_odds(self):
-        maleSecret, femaleSecret = self.traditional_metrics()
+
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
 
         male = maleSecret
         female = femaleSecret
