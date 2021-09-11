@@ -104,15 +104,13 @@ def _edit_source_code(settings_map, all_metadata):
 
 def __format_args(**kwargs):
     res = "{"
+
+    # metrics is a special case, so we can populate that explicitly
+    metrics = kwargs.pop("metrics")
+    res += "\'{key}\': {value},".format(key="metrics", value=metrics)
+
     for key in kwargs:
-        print(kwargs[key])
-        if kwargs[key] is list:
-            res += "\'{key}\': {value},".format(key=key, value=kwargs[key])
-            print("HERE")
-            print(key)
-            print(kwargs[key])
-        else:
-            res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
+        res += "\'{key}\': \'{value}\',".format(key=key, value=kwargs[key])
 
     # Omit last comma
     res = res[:-1] + "}"
