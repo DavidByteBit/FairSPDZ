@@ -48,6 +48,7 @@ if model_type == "lr":
 
 def main():
 
+    print(settings_map["metrics"])
     metrics = json.loads(settings_map["metrics"])
 
     fairness_metric = fairness_metrics.metric(ground_truth, classifications, model.get_col(protected_col_index),
