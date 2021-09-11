@@ -15,7 +15,7 @@
  num_of_parties: "2"
  compiler: "-R 64 -Y run"
  VM: "semi2k-party.x -N 2 -p 0 run"
- protected_col: "47"
+ protected_col: "45"
  protected_col_vals: "[0,1]"
  online: "true"
  my_private_ip: "10.1.0.4"
