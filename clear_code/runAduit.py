@@ -105,6 +105,7 @@ def _edit_source_code(settings_map, all_metadata):
 def __format_args(**kwargs):
     res = "{"
     for key in kwargs:
+        print(kwargs[key])
         if kwargs[key] is list:
             res += "\'{key}\': {value},".format(key=key, value=kwargs[key])
         else:
