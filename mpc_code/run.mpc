@@ -75,7 +75,7 @@ def equalized_odds(metric_function):
         print_ln("%s", m)
         print_ln_to(val, "%s", m)
         print_ln_to(val, "Equalized odds - male: %s", male.reveal_to(val))
-        print_ln_to(regint(val), "Equalized odds - female: %s", female.reveal_to(regint(val)))
+        print_ln_to(val, "Equalized odds - female: %s", female.reveal_to(val))
 
 
 def demographic_parity(metric_function):
