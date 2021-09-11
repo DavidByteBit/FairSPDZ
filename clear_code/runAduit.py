@@ -68,7 +68,7 @@ def _edit_source_code(settings_map, all_metadata):
     metrics = settings_map["metrics"]
 
     # make sure metrics is ready to be read as a json
-    metrics = str(metrics.replace("[", "").replace("]","").split(","))
+    metrics = metrics.replace("[", "").replace("]", "").split(",")
 
     file = []
     found_delim = False
