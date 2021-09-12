@@ -78,7 +78,8 @@ class metric():
             z = 1 - x
             w = 1 - y
             print_ln("%s", i)
-            is_male = (c == d)
+            # is_male = (c == d)
+            is_male = sfix(1)
             print_ln("%s", i)
             is_female = 1 - is_male
 
