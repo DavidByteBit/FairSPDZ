@@ -73,25 +73,22 @@ def main():
 def equalized_odds(metric_function):
     male, female = metric_function.equalized_odds()
 
-    for val in recipients:
-        print_ln("Equalized odds - male: %s", male.reveal(val))
-        print_ln("Equalized odds - female: %s", female.reveal(val))
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
 
 
 def demographic_parity(metric_function):
     male, female = metric_function.demographic_parity()
 
-    for val in recipients:
-        print_ln("Demographic parity - male: %s", male.reveal())
-        print_ln("Demographic parity - female: %s", female.reveal())
+    print_ln("Demographic parity - male: %s", male.reveal())
+    print_ln("Demographic parity - female: %s", female.reveal())
 
 
 def equal_opportunity(metric_function):
     male, female = metric_function.equal_opportunity()
 
-    for val in recipients:
-        print_ln("Equal opportunity - male: %s", male.reveal())
-        print_ln("Equal opportunity - female: %s", female.reveal())
+    print_ln("Equal opportunity - male: %s", male.reveal())
+    print_ln("Equal opportunity - female: %s", female.reveal())
 
 
 def equalized_odds_ratio(metric_function):
@@ -105,9 +102,8 @@ def subgroup_accuracy(metric_function):
 def baseline(metric_function):
     male, female = metric_function.baseline_metrics()
 
-    for val in recipients:
-        print_ln("male TP, FP, TN, FN: %s", male.reveal())
-        print_ln("female TP, FP, TN, FN: %s", female.reveal())
+    print_ln("male TP, FP, TN, FN: %s", male.reveal())
+    print_ln("female TP, FP, TN, FN: %s", female.reveal())
 
 
 
