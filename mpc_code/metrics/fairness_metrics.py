@@ -63,14 +63,16 @@ class metric():
         def _(i):
             print_ln("%s", i)
             a = predicted_labels[i]
+            print_ln("%s", i)
             b = actual_labels[i]
-
+            print_ln("%s", i)
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
             w = 1 - y
-
+            print_ln("%s", i)
             is_male = (protected_col[i] == protected_col_vals[0])
+            print_ln("%s", i)
             is_female = 1 - is_male
 
             male[0] += (z * w) * is_male
