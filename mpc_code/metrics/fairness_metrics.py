@@ -56,31 +56,16 @@ class metric():
             male[i] = sfix(0)
             female[i] = sfix(0)
 
-        # print_ln("%s", protected_col.reveal())
-        # print_ln("%s", len(protected_col))
-
-        protected_col_vals = [0.0, 1.0]
-
-        print_ln("%s", protected_col_vals)
 
         @for_range(l)
         def _(i):
-            print_ln("%s", i)
             a = predicted_labels[i]
             b = actual_labels[i]
-            print_ln("%s", i)
-            # c = protected_col[i]
-            c = sfix(0)
-            d = 0.0
-            print_ln("%s", i)
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
             w = 1 - y
-            print_ln("%s", i)
-            is_male = (c == d)
-            #is_male = sfix(1)
-            print_ln("%s", i)
+            is_male = (protected_col[i] == protected_col_vals[0])
             is_female = 1 - is_male
 
             male[0] += (z * w) * is_male
