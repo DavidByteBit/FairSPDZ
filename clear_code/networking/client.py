@@ -11,7 +11,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
     party_id = settings_map["party"]
 
     if introduce:
-        print("Connecting to Alice...\n")
+        print("Connecting to Bob...\n")
         time.sleep(1)
 
     attempts = 0

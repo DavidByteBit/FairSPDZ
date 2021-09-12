@@ -25,7 +25,7 @@ def run(settings_map, introduce=False):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
         if introduce:
-            print("Connecting to Bob...\n")
+            print("Connecting to Alice...\n")
             time.sleep(1)
 
         s.bind((host_ip, host_port))
