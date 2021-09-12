@@ -56,6 +56,8 @@ class metric():
             male[i] = sfix(0)
             female[i] = sfix(0)
 
+        print_ln("%s", protected_col.reveal())
+        print_ln("%s", protected_col.len())
 
         @for_range_opt(l)
         def _(i):
