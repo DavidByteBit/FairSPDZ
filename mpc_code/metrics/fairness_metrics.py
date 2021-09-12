@@ -59,29 +59,28 @@ class metric():
 
         @for_range_opt(l)
         def _(i):
-            print_ln("1")
+            print_ln("%s", i)
             a = predicted_labels[i]
             b = actual_labels[i]
-            print_ln("2")
+
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
             w = 1 - y
-            print_ln("3")
+
             is_male = (protected_col[i] == protected_col_vals[0])
             is_female = 1 - is_male
-            print_ln("4")
+
             male[0] += (z * w) * is_male
             male[1] += (z * b) * is_male
             male[2] += (x * w) * is_male
             male[3] += (x * y) * is_male
-            print_ln("5")
+
             female[0] += (z * w) * is_female
             female[1] += (z * b) * is_female
             female[2] += (x * w) * is_female
             female[3] += (x * y) * is_female
 
-            print_ln("6")
 
         self.base_metrics.append(male)
         self.base_metrics.append(female)
