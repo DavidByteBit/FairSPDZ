@@ -120,7 +120,6 @@ class logistic_regression(model):
         def _(i):
             @for_range_opt(cols)
             def _(j):
-                print_ln("loading data - row: %s, col:%s", i, j)
                 data[i][j] = sfix.get_input_from(party_id)
 
         return data
@@ -131,7 +130,6 @@ class logistic_regression(model):
 
         @for_range_opt(row_length)
         def _(i):
-            print_ln("loading label %s", i)
             labels[i] = sint.get_input_from(party_id)
 
         return labels

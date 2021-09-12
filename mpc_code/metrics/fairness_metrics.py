@@ -33,56 +33,56 @@ class metric():
 
             returns (TP, FP, TN, FN) """
 
-        print_ln("1")
 
         protected_col = self.protected_col
         protected_col_vals = self.protected_col_vals
 
-        print_ln("2")
-
         actual_labels = self.actual_labels
         predicted_labels = self.predicted_labels
-        print_ln("3")
+
         l = len(actual_labels)
 
         assert (l == len(predicted_labels))
         assert (l == len(protected_col))
-        print_ln("4")
+
         # TODO: Needs to be more general actually... need to have as many arrays as there are attribute values
         # TP, FP, TN, FN
         male = sfix.Array(4)
         female = sfix.Array(4)
-        print_ln("5")
+
+
         @for_range(4)
         def _(i):
             male[i] = sfix(0)
             female[i] = sfix(0)
 
-        print_ln("6")
+
         @for_range_opt(l)
         def _(i):
+            print_ln("1")
             a = predicted_labels[i]
             b = actual_labels[i]
-
+            print_ln("2")
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
             w = 1 - y
-
+            print_ln("3")
             is_male = (protected_col[i] == protected_col_vals[0])
             is_female = 1 - is_male
-
+            print_ln("4")
             male[0] += (z * w) * is_male
             male[1] += (z * b) * is_male
             male[2] += (x * w) * is_male
             male[3] += (x * y) * is_male
-
+            print_ln("5")
             female[0] += (z * w) * is_female
             female[1] += (z * b) * is_female
             female[2] += (x * w) * is_female
             female[3] += (x * y) * is_female
 
-        print_ln("7")
+            print_ln("6")
+
         self.base_metrics.append(male)
         self.base_metrics.append(female)
 

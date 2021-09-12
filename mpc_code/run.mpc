@@ -42,11 +42,8 @@ recipients = json.loads(settings_map["recipients"])
 model_type = settings_map['model_type']
 
 if model_type == "lr":
-    print_ln("%s", "starting to load model and data from parties...")
     model = models.logistic_regression(all_metadata, model_owner_id)
-    print_ln("%s", "model loaded, classifying data...")
     classifications = model.classify()
-    print_ln("%s", "data classified, determining fairness metrics...")
     ground_truth = model.get_true_labels()
 
 
