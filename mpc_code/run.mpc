@@ -73,8 +73,6 @@ def main():
 def equalized_odds(metric_function):
     male, female = metric_function.equalized_odds()
 
-    male.reveal_to(1)
-
     for val in recipients:
         print_ln_to(val, "Equalized odds - male: %s", male.reveal_to(val))
         print_ln_to(val, "Equalized odds - female: %s", female.reveal_to(val))
