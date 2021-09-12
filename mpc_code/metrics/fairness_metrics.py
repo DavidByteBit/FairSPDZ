@@ -69,7 +69,8 @@ class metric():
             a = predicted_labels[i]
             b = actual_labels[i]
             print_ln("%s", i)
-            c = protected_col[i]
+            # c = protected_col[i]
+            c = sfix(0)
             print_ln("%s", i)
             x = (a == 1)
             y = (b == 1)
