@@ -33,7 +33,7 @@ def run(settings_map, introduce=False):
         conn, addr = s.accept()
         with conn:
             if introduce:
-                print("Connected - transferring public data\n")
+                print("Connected to Alice - Hi Alice! \n")
                 time.sleep(1)
             #print('Connected by', addr)
             while True:

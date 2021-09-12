@@ -27,7 +27,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
                 attempts = max_attempts
 
                 if introduce:
-                    print("Connected - transferring public data\n")
+                    print("Connected to Bob - Hello Bob!\n")
                     time.sleep(1)
 
                 msg = ""
