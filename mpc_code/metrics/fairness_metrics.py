@@ -59,7 +59,7 @@ class metric():
         print_ln("%s", protected_col.reveal())
         print_ln("%s", len(protected_col))
 
-        @for_range_opt(l)
+        @for_range(l)
         def _(i):
             print_ln("%s", i)
             a = predicted_labels[i]
