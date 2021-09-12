@@ -16,15 +16,11 @@ def run(setting_map_path):
     print("parsing settings\n")
     settings_map = _parse_settings(setting_map_path)
 
-    time.sleep(1)
-
     # print("validating settings")
     # validate_settings(settings_map)
 
     print("processing data and retrieving its metadata\n")
     metadata = _getMetaData(settings_map)
-
-    time.sleep(1)
 
     print("distributing data\n")
     all_metadata = _distribute_Data(settings_map, metadata)
@@ -49,8 +45,6 @@ def run(setting_map_path):
         _compile_spdz(settings_map)
 
     print("Compilation successful, running secure code")
-
-    time.sleep(1)
 
     _run_mpSPDZ(settings_map)
 
