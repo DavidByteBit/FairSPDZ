@@ -71,13 +71,14 @@ class metric():
             print_ln("%s", i)
             # c = protected_col[i]
             c = sfix(0)
+            d = 0.0
             print_ln("%s", i)
             x = (a == 1)
             y = (b == 1)
             z = 1 - x
             w = 1 - y
             print_ln("%s", i)
-            is_male = (c == protected_col_vals[0])
+            is_male = (c == d)
             print_ln("%s", i)
             is_female = 1 - is_male
 
