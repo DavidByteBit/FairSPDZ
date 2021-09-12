@@ -59,6 +59,8 @@ class metric():
         # print_ln("%s", protected_col.reveal())
         # print_ln("%s", len(protected_col))
 
+        print_ln("%s", protected_col_vals)
+
         @for_range(l)
         def _(i):
             print_ln("%s", i)
