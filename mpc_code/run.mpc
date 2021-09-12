@@ -63,7 +63,6 @@ def main():
                       "baseline": baseline}
 
     for metric in metrics:
-        print_ln("%s", metric)
         metric_options[metric](fairness_metric)
 
 
