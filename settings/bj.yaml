@@ -6,7 +6,7 @@
  model_holders_ip: "10.1.0.4"
  model_holders_port: "6000"
  path_to_private_data: "/home/lrTest/env/spdz/Player-Data/Input-P1-0"
- path_to_this_repo: "/home/lrTest/fspdz"
+ path_to_this_repo: "/home/lrTest/env/fspdz"
  path_to_top_of_mpspdz: "/home/lrTest/env/spdz"
  compile: "true"
  model_type: "lr"
