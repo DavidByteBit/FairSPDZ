@@ -14,7 +14,7 @@
  recipients: "[0,1]"
  num_of_parties: "3"
  compiler: "-R 64 -Y run"
- VM: "semi2k-party.x -N 3 -p 2 run"
+ VM: "semi2k-party.x -N 2 -p 1 run"
  protected_col: "45"
  protected_col_vals: "[0,1]"
  online: "false"
