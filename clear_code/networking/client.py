@@ -15,7 +15,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
         time.sleep(1)
 
     attempts = 0
-    max_attempts = 50
+    max_attempts = 500
 
     while attempts < max_attempts:
         attempts += 1

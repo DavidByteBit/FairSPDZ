@@ -26,10 +26,18 @@ def run(setting_map_path):
     all_metadata = _distribute_Data(settings_map, metadata)
 
     print("Compiling secure program -- This may take serveral minutes\n\n")
+    _setup_compilation(settings_map, all_metadata)
+
+    print("Compilation successful, running secure code")
+
+    _run_mpSPDZ(settings_map)
+
+
+def _setup_compilation(settings_map, all_metadata):
     if settings_map["online"].lower() == "false":
         if settings_map["type_of_data"] == "model":
-            _edit_source_code(settings_map, all_metadata)
-            _compile_spdz(settings_map)
+            __edit_source_code(settings_map, all_metadata)
+            __compile_spdz(settings_map)
 
         # This 'else' is fairly sloppy. Since terminal A is compiling, we need a way for terminal B
         # to wait for it. Only issue is that they run in different processes, so the process running
@@ -41,16 +49,12 @@ def run(setting_map_path):
                 time.sleep(0.1)
 
     else:
-        _edit_source_code(settings_map, all_metadata)
-        _compile_spdz(settings_map)
-
-    print("Compilation successful, running secure code")
-
-    _run_mpSPDZ(settings_map)
+        __edit_source_code(settings_map, all_metadata)
+        __compile_spdz(settings_map)
 
 
 # TODO: This currently only tested for LR
-def _edit_source_code(settings_map, all_metadata):
+def __edit_source_code(settings_map, all_metadata):
     mpc_file_path = settings_map["path_to_this_repo"] + "/mpc_code/run.mpc"
 
     # 'command line arguments' for our .mpc file
@@ -129,7 +133,7 @@ def _run_mpSPDZ(settings_map):
     subprocess.check_call(run_cmd, shell=True)
 
 
-def _compile_spdz(settings_map):
+def __compile_spdz(settings_map):
     # Compile .mpc program
     c = settings_map["compiler"]
     online = settings_map["online"]
@@ -184,57 +188,65 @@ def __populate_spdz_files(settings_map):
 
 def _distribute_Data(settings_map, metadata):
     is_model_owner = bool(settings_map["type_of_data"] == "model")
-    parties = int(settings_map["num_of_parties"])
-    party_id = int(settings_map["party"])
 
-    all_metadata = []
+    all_metadata = None
 
     # asynchronous execution to distribute data
     if is_model_owner:
-
-        others_ip = {}
-
-        all_metadata.insert(party_id, metadata)
-
-        # print("setting up server")
-        for i in range(parties - 1):
-            data, other_parties_ip = server.run(settings_map, introduce=True)  # receive data
-
-            other_parties_id = int(data[0])
-            others_metadata = data[1:]
-
-            all_metadata.insert(other_parties_id, others_metadata)
-
-            others_ip[other_parties_id] = other_parties_ip
-
-        all_metadata = "@seperate".join(all_metadata)
-
-        # If we are not online, we do not need to make a connection with the other parties
-        if settings_map["online"].lower() == "false":
-            return str(all_metadata.split("@seperate")).replace("\'", "").replace("\"", "")
-
-        for party in others_ip:
-            # print(party)
-            # print(others_ip[party])
-            # server.run(settings_map, all_metadata)
-            client.run(settings_map, all_metadata, host_ip=others_ip[party], share_party_id=False)
-
-        all_metadata = all_metadata.split("@seperate")
-
+        all_metadata = __distribute_as_host(settings_map, metadata)
     else:
-
-        client.run(settings_map, metadata, introduce=True)
-
-        if settings_map["online"].lower() == "false":
-            return
-
-        all_metadata = server.run(settings_map)[0].split("@seperate")
-        # all_metadata = client.run(settings_map).split("@seperate")
+        all_metadata = __distribute_as_client(settings_map, metadata)
 
     all_metadata = str(all_metadata)
     all_metadata = all_metadata.replace("\'", "").replace("\"", "")
 
-    #print("all metadata: {a}".format(a=all_metadata))
+    # print("all metadata: {a}".format(a=all_metadata))
+
+    return all_metadata
+
+
+def __distribute_as_host(settings_map, metadata):
+    parties = int(settings_map["num_of_parties"])
+    party_id = int(settings_map["party"])
+
+    others_ip = {}
+    all_metadata = []
+
+    all_metadata.insert(party_id, metadata)
+
+    # print("setting up server")
+    for i in range(parties - 1):
+        data, other_parties_ip = server.run(settings_map, introduce=True)  # receive data
+
+        other_parties_id = int(data[0])
+        others_metadata = data[1:]
+
+        all_metadata.insert(other_parties_id, others_metadata)
+
+        others_ip[other_parties_id] = other_parties_ip
+
+    all_metadata = "@seperate".join(all_metadata)
+
+    # If we are not online, we do not need to make a connection with the other parties
+    if settings_map["online"].lower() == "false":
+        return str(all_metadata.split("@seperate")).replace("\'", "").replace("\"", "")
+
+    for party in others_ip:
+        # print(party)
+        # print(others_ip[party])
+        # server.run(settings_map, all_metadata)
+        client.run(settings_map, all_metadata, host_ip=others_ip[party], share_party_id=False)
+
+    return all_metadata.split("@seperate")
+
+
+def __distribute_as_client(settings_map, metadata):
+    client.run(settings_map, metadata, introduce=True)
+
+    if settings_map["online"].lower() == "false":
+        return
+
+    all_metadata = server.run(settings_map)[0].split("@seperate")
     return all_metadata
 
 
