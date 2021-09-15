@@ -33,7 +33,6 @@ class metric():
 
             returns (TP, FP, TN, FN) """
 
-
         protected_col = self.protected_col
         protected_col_vals = self.protected_col_vals
 
@@ -50,12 +49,10 @@ class metric():
         male = sfix.Array(4)
         female = sfix.Array(4)
 
-
         @for_range(4)
         def _(i):
             male[i] = sfix(0)
             female[i] = sfix(0)
-
 
         @for_range(l)
         def _(i):
@@ -78,7 +75,6 @@ class metric():
             female[2] += (x * w) * is_female
             female[3] += (x * y) * is_female
 
-
         self.base_metrics.append(male)
         self.base_metrics.append(female)
 
@@ -86,21 +82,19 @@ class metric():
 
 
     def equalized_odds(self):
-
         # This function requires the base_metrics to be populated. If they are not populated, populate them
         if not self.base_metrics:
             self.baseline_metrics()
 
         maleSecret, femaleSecret = self.base_metrics
 
-        male_res = maleSecret[1]/(maleSecret[1] + maleSecret[2])
-        female_res = femaleSecret[1]/(femaleSecret[1] + femaleSecret[2])
+        male_res = maleSecret[0] / (maleSecret[0] + maleSecret[3])
+        female_res = femaleSecret[0] / (femaleSecret[0] + femaleSecret[3])
 
         return male_res, female_res
 
 
     def demographic_parity(self):
-
         # This function requires the base_metrics to be populated. If they are not populated, populate them
         if not self.base_metrics:
             self.baseline_metrics()
@@ -112,9 +106,8 @@ class metric():
 
         return male_res, female_res
 
-
+    # Also known as Predictive rate parity
     def equal_opportunity(self):
-
         # This function requires the base_metrics to be populated. If they are not populated, populate them
         if not self.base_metrics:
             self.baseline_metrics()
@@ -127,3 +120,86 @@ class metric():
         return male_res, female_res
 
 
+    def false_negative_rate_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[3] / (maleSecret[0] + maleSecret[3])
+        female_res = femaleSecret[3] / (femaleSecret[0] + femaleSecret[3])
+
+        return male_res, female_res
+
+
+    def false_positive_rate_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[1] / (maleSecret[1] + maleSecret[2])
+        female_res = femaleSecret[1] / (femaleSecret[1] + femaleSecret[2])
+
+        return male_res, female_res
+
+
+    def negative_predictive_value_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[2] / (maleSecret[2] + maleSecret[3])
+        female_res = femaleSecret[2] / (femaleSecret[2] + femaleSecret[3])
+
+        return male_res, female_res
+
+
+    def accuracy_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = (maleSecret[0] + maleSecret[2]) / (maleSecret[0] + maleSecret[1] +
+                                                      maleSecret[2] + maleSecret[3])
+
+        female_res = (femaleSecret[0] + femaleSecret[2]) / (femaleSecret[0] + femaleSecret[1] +
+                                                            femaleSecret[2] + femaleSecret[3])
+
+        return male_res, female_res
+
+
+    def specificity_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = maleSecret[2] / (maleSecret[2] + maleSecret[1])
+
+        female_res = femaleSecret[2] / (femaleSecret[2] + femaleSecret[1])
+
+        return male_res, female_res
+
+
+    def proportional_parity(self):
+        # This function requires the base_metrics to be populated. If they are not populated, populate them
+        if not self.base_metrics:
+            self.baseline_metrics()
+
+        maleSecret, femaleSecret = self.base_metrics
+
+        male_res = (maleSecret[0] + maleSecret[1]) / (maleSecret[0] + maleSecret[1] +
+                                                      maleSecret[2] + maleSecret[3])
+
+        female_res = (femaleSecret[0] + femaleSecret[1]) / (femaleSecret[0] + femaleSecret[1] +
+                                                            femaleSecret[2] + femaleSecret[3])
+
+        return male_res, female_res

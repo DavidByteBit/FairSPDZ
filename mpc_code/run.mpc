@@ -60,6 +60,12 @@ def main():
                       "equal_opportunity": equal_opportunity,
                       "equalized_odds_ratio": equalized_odds_ratio,
                       "subgroup_accuracy": subgroup_accuracy,
+                      "false_negative_rate_parity": false_negative_rate_parity,
+                      "false_positive_rate_parity": false_positive_rate_parity,
+                      "negative_predictive_value_parity": negative_predictive_value_parity,
+                      "accuracy_parity": accuracy_parity,
+                      "specificity_parity": specificity_parity,
+                      "proportional_parity": proportional_parity,
                       "baseline": baseline}
 
     for metric in metrics:
