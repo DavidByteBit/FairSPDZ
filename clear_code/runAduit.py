@@ -15,22 +15,22 @@ from os import path
 def run(setting_map_path):
     # Path to settings file
 
-    print("parsing settings\n")
+    # print("parsing settings")
     settings_map = _parse_settings(setting_map_path)
 
     # print("validating settings")
     # validate_settings(settings_map)
 
-    print("processing data and retrieving its metadata\n")
+    # print("processing data and retrieving its metadata")
     metadata = _getMetaData(settings_map)
 
-    print("distributing data\n")
+    print("distributing data")
     all_metadata = _distribute_Data(settings_map, metadata)
 
-    print("Compiling secure program -- This may take several minutes\n\n")
+    # print("Compiling secure program -- This may take several minutes\n\n")
     _setup_compilation(settings_map, all_metadata)
 
-    print("Compilation successful, running secure code")
+    # print("Compilation successful, running secure code")
     _run_mpSPDZ(settings_map)
 
     # _print_results(settings_map)
