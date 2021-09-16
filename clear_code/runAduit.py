@@ -9,8 +9,8 @@ from .processModelData import processModel
 
 from os import path
 
-# TODO: Find a better place for this... Or just make it a constant... decide
-runtime_results_file = "runtime_results.txt"
+# # TODO: Find a better place for this... Or just make it a constant... decide
+# runtime_results_file = "runtime_results.txt"
 
 def run(setting_map_path):
     # Path to settings file
@@ -33,27 +33,27 @@ def run(setting_map_path):
     print("Compilation successful, running secure code")
     _run_mpSPDZ(settings_map)
 
-    _print_results(settings_map)
+    # _print_results(settings_map)
 
 
-def _print_results(setting_map):
-    start = False
-    res = []
-
-    with open("{a}/{b}".format(a=setting_map["path_to_this_repo"], b=runtime_results_file), 'r') as file:
-        for line in file:
-
-            if line == "@end":
-                break
-
-            if start:
-                res.append(line)
-            elif line == "@results":
-                start = True
-
-    res = ''.join([s for s in res])
-
-    print(res)
+# def _print_results(setting_map):
+#     start = False
+#     res = []
+#
+#     with open("{a}/{b}".format(a=setting_map["path_to_this_repo"], b=runtime_results_file), 'r') as file:
+#         for line in file:
+#
+#             if line == "@end":
+#                 break
+#
+#             if start:
+#                 res.append(line)
+#             elif line == "@results":
+#                 start = True
+#
+#     res = ''.join([s for s in res])
+#
+#     print(res)
 
 
 
@@ -151,7 +151,7 @@ def _run_mpSPDZ(settings_map):
                                                           d=settings_map["model_holders_ip"],
                                                           )
     else:
-        run_cmd = "cd {a} && ./{b} > {c}".format(a=path_to_spdz, b=runner, c=runtime_results_file)
+        run_cmd = "cd {a} && ./{b}".format(a=path_to_spdz, b=runner)
 
     print("Starting secure program with command: {a}".format(a=run_cmd))
 
