@@ -74,8 +74,50 @@ def main():
     print_ln("@end")
 
 
-
 def equalized_odds(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+# TODO: Make them call the correct funciton - too tired atm...
+def false_negative_rate_parity(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+def false_positive_rate_parity(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+def negative_predictive_value_parity(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+def accuracy_parity(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+def specificity_parity(metric_function):
+    male, female = metric_function.equalized_odds()
+
+    print_ln("Equalized odds - male: %s", male.reveal())
+    print_ln("Equalized odds - female: %s", female.reveal())
+
+
+def proportional_parity(metric_function):
     male, female = metric_function.equalized_odds()
 
     print_ln("Equalized odds - male: %s", male.reveal())
