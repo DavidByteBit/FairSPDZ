@@ -68,8 +68,10 @@ def main():
                       "proportional_parity": proportional_parity,
                       "baseline": baseline}
 
+    print_ln("@results")
     for metric in metrics:
         metric_options[metric](fairness_metric)
+    print_ln("@end")
 
 
 
