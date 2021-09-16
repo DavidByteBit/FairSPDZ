@@ -11,7 +11,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
     party_id = settings_map["party"]
 
     if introduce:
-        print("Connecting to Bob...\n")
+        print("Connecting to Bob...")
         time.sleep(1)
 
     attempts = 0
@@ -27,7 +27,7 @@ def run(settings_map, metadata, host_ip=None, share_party_id=True, introduce=Fal
                 attempts = max_attempts
 
                 if introduce:
-                    print("Connected to Bob - Hello Bob!\n")
+                    print("Connected to Bob - Hello Bob!")
                     time.sleep(1)
 
                 msg = ""

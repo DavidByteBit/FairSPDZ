@@ -25,7 +25,7 @@ def run(settings_map, introduce=False):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
         if introduce:
-            print("Connecting to Alice...\n")
+            print("Connecting to Alice...")
             time.sleep(1)
 
         s.bind((host_ip, host_port))
@@ -33,7 +33,7 @@ def run(settings_map, introduce=False):
         conn, addr = s.accept()
         with conn:
             if introduce:
-                print("Connected to Alice - Hi Alice! \n")
+                print("Connected to Alice - Hi Alice!")
                 time.sleep(1)
             #print('Connected by', addr)
             while True:
