@@ -71,7 +71,7 @@ def main():
     print_ln("results\n")
     for metric in metrics:
         metric_options[metric](fairness_metric)
-    #print_ln("@end")
+    print_ln("Protocol Complete")
 
 
 def equalized_odds(metric_function):
