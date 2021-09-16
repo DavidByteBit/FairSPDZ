@@ -153,7 +153,7 @@ def _run_mpSPDZ(settings_map):
     else:
         run_cmd = "cd {a} && ./{b} > {c}".format(a=path_to_spdz, b=runner, c=runtime_results_file)
 
-    print("Starting secure program with command: {a}".format(a=run_cmd))
+    # print("Starting secure program with command: {a}".format(a=run_cmd))
 
     subprocess.check_call(run_cmd, shell=True)
 
