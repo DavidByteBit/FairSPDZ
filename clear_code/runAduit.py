@@ -216,7 +216,6 @@ def _distribute_Data(settings_map, metadata):
 
     all_metadata = None
 
-    # asynchronous execution to distribute data
     if is_model_owner:
         all_metadata = __distribute_as_host(settings_map, metadata)
     else:
